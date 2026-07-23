@@ -1,0 +1,16 @@
+.icon_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-utility);
+    border: 1px solid var(--border-button);
+    width: 40px;
+    height: 40px;
+    border-radius: 999999px;
+    cursor: pointer;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+}

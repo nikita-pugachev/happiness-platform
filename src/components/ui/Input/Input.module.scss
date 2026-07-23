@@ -1,0 +1,72 @@
+.inputWrapper {
+    border: none;
+    padding: 0;
+    background-color: transparent;
+    width: 100%;
+}
+
+.inputContainer {
+    position: relative;
+    display: flex;
+    border: none;
+    width: 100%;
+    padding: 0;
+    background-color: transparent;
+}
+
+.label {
+    color: var(--font-color);
+    font-family: var(--font);
+    font-size: var(--font-size-support);
+    background-color: transparent;
+    padding-left: 4px;
+}
+
+.input {
+    width: 100%;
+    padding: 12px 24px;
+    border-radius: 8px;
+    border: 1px solid var(--bg-utility);
+    font-family: var(--font);
+    color: var(--font-color);
+    font-size: var(--font-size-main);
+    font-weight: var(--font-weight-main);
+}
+
+input:focus {
+    outline: none;
+    border: 1px solid var(--border-button);
+}
+
+.error {
+    color: var(--border-error);
+    font-family: var(--font);
+    font-size: var(--font-size-support);
+}
+
+.hint {
+    color: var(--font-color);
+    font-family: var(--font);
+    font-size: var(--font-size-support);
+}
+
+.categoryIcon {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    left: 12px;
+    top: 12px;
+    border: none;
+    background: transparent;
+}
+
+.iconContainer {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    right: 12px;
+    top: 12px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
