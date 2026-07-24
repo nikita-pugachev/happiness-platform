@@ -14,3 +14,10 @@
     width: 20px;
     height: 20px;
 }
+
+.label {
+    font-family: var(--font);
+    font-size: var(--font-size-support);
+    color: var(--font-color);
+    font-weight: var(--font-weight-support);
+}

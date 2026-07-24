@@ -3,6 +3,7 @@ import CartIcon from '@/assets/images/icons/cart.svg';
 import { IconButton } from '@/components/ui/IconButton/IconButton';
 import { Button } from '@/components/ui/Button/Button';
 import { Input } from '@/components/ui/Input/Input';
+import { Search } from '@/components/ui/Search/Search';
 
 export const Header = () => {
     return (
@@ -17,7 +18,7 @@ export const Header = () => {
                 </div>
                 <IconButton src={CartIcon} alt="Корзина" />
             </div>
-            <Input placeholder="Поиск..." />
+            <Search placeholder='Поиск...'/>
         </header>
     );
     };

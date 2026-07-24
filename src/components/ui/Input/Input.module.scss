@@ -30,7 +30,7 @@
     font-family: var(--font);
     color: var(--font-color);
     font-size: var(--font-size-main);
-    font-weight: var(--font-weight-main);
+    font-weight: var(--font-weight-support);
 }
 
 input:focus {
@@ -52,21 +52,30 @@ input:focus {
 
 .categoryIcon {
     position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 20px;
     height: 20px;
-    left: 12px;
-    top: 12px;
     border: none;
     background: transparent;
+    padding: 0;
 }
-
 .iconContainer {
     position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 20px;
     height: 20px;
-    right: 12px;
-    top: 12px;
     border: none;
     background: transparent;
     cursor: pointer;
+    padding: 0;
 }

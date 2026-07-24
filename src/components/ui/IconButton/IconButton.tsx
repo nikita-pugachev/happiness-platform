@@ -4,13 +4,17 @@ import Image from "next/image";
 interface IconButtonProps {
     src: string;
     alt: string;
+    label?: string;
     onClick?: () => void;
 }
 
-export const IconButton = ({ src, alt, onClick }: IconButtonProps) => {
+export const IconButton = ({ src, alt, label, onClick }: IconButtonProps) => {
     return (
-        <button className={styles.icon_button} onClick={onClick}>
-            <Image src={src} alt={alt} className={styles.icon} />
-        </button>
+        <div>
+            <button className={styles.icon_button} onClick={onClick}>
+                <Image src={src} alt={alt} className={styles.icon} />
+            </button>
+            { label && <span className={styles.label}>{label}</span>}
+        </div>
     );
 };
