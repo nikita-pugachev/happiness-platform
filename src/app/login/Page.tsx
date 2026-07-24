@@ -1,14 +1,15 @@
 'use client'
 import styles from './login.module.scss';
 import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
 import { Input } from "@/components/ui/Input/Input";
 import { Button } from "@/components/ui/Button/Button";
 import { useRouter } from "next/navigation";
+import { createClient } from "@/utils/supabase/client";
 
-export default function Page () {
-    const router = useRouter();
+export default function Page() {
+  const router = useRouter();
+  const supabase = createClient();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,6 +20,23 @@ export default function Page () {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError("");
+    setLoading(true);
+
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (signInError) {
+      setError("Неверный email или пароль");
+      setLoading(false);
+      return;
+    }
+
+    setLoading(false);
+    router.push("/");
+    router.refresh();
   };
 
   return (
@@ -54,7 +72,7 @@ export default function Page () {
           {loading ? "Вход..." : "Войти"}
         </Button>
         {error ? (
-          <p className={styles.error}>Неверный email или пароль</p>
+          <p className={styles.error}>{error}</p>
         ) : null}
         <Link href="/register" className={styles.link}>
           <span>Нет аккаунта? Зарегистрироваться</span>
@@ -62,4 +80,4 @@ export default function Page () {
       </form>
     </div>
   );
-};
+}

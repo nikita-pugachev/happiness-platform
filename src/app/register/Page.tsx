@@ -1,14 +1,15 @@
 'use client'
 import styles from './register.module.scss';
 import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
 import { Input } from "@/components/ui/Input/Input";
 import { Button } from "@/components/ui/Button/Button";
 import { useRouter } from "next/navigation";
+import { createClient } from "@/utils/supabase/client";
 
 export default function Page() {
   const router = useRouter();
+  const supabase = createClient();
 
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -20,6 +21,34 @@ export default function Page() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError(null);
+
+    if (password.length < 6) {
+      setError("Пароль должен содержать не менее 6-ти символов");
+      return;
+    }
+
+    setLoading(true);
+
+    const { error: signUpError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          name,
+        },
+      },
+    });
+
+    if (signUpError) {
+      setError(signUpError.message);
+      setLoading(false);
+      return;
+    }
+
+    setLoading(false);
+    router.push("/");
+    router.refresh();
   };
 
   return (
