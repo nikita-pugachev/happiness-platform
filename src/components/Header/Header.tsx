@@ -7,9 +7,13 @@ import { useState } from 'react';
 import { IconButton } from '@/components/ui/IconButton/IconButton';
 import { Button } from '@/components/ui/Button/Button';
 import { Search } from '@/components/ui/Search/Search';
+import { useAuth } from '@/hooks/useAuth';
+import { useRouter } from 'next/navigation';
 
 export const Header = () => {
     const [open, setOpen] = useState(false);
+    const { user, signOut } = useAuth();
+    const router = useRouter();
 
     const toggleMenu = () => {
         setOpen((prev) => !prev);
@@ -17,6 +21,11 @@ export const Header = () => {
 
     const closeMenu = () => {
         setOpen(false);
+    };
+
+    const handleSignOut = async () => {
+        await signOut();
+        closeMenu();
     };
 
     return (
@@ -30,13 +39,58 @@ export const Header = () => {
                         <Image src={Close} alt="Закрыть" className={styles.close_icon} />
                     </button>
                     <div className={styles.menu_content}>
-                        <Button variant="main" className={styles.link_button}>Войти</Button>
-                        <Button variant="secondary" className={styles.link_button}>Зарегистрироваться</Button>
+                        {!user ? (
+                            <>
+                                <Button 
+                                    variant="main" 
+                                    className={styles.link_button}
+                                    onClick={() => { closeMenu(); router.push('/login'); }}
+                                >
+                                    Войти
+                                </Button>
+                                <Button 
+                                    variant="secondary" 
+                                    className={styles.link_button}
+                                    onClick={() => { closeMenu(); router.push('/register'); }}
+                                >
+                                    Зарегистрироваться
+                                </Button>
+                            </>
+                        ) : (
+                            <>
+                                <Button 
+                                    variant="secondary" 
+                                    className={styles.link_button}
+                                    onClick={() => { closeMenu(); router.push('/profile'); }}
+                                >
+                                    Личный кабинет
+                                </Button>
+                                <Button variant="secondary" className={styles.link_button}>
+                                    Избранное
+                                </Button>
+                                <Button variant="secondary" className={styles.link_button}>
+                                    История покупок
+                                </Button>
+                                <Button 
+                                    variant="main" 
+                                    className={styles.link_button}
+                                    onClick={handleSignOut}
+                                >
+                                    Выход
+                                </Button>
+                            </>
+                        )}
                     </div>
                 </div>
                 <div className={styles.desktop_nav}>
-                    <Button variant="main">Войти</Button>
-                    <Button variant="secondary">Зарегистрироваться</Button>
+                    {!user ? (
+                        <>
+                            <Button variant="main" onClick={() => router.push('/login')}>Войти</Button>
+                            <Button variant="secondary" onClick={() => router.push('/register')}>Зарегистрироваться</Button>
+                        </>
+                    ) : (
+                        <Button variant="main" onClick={handleSignOut}>Выход</Button>
+                    )}
                 </div>
                 <IconButton src={CartIcon} alt="Корзина" />
             </div>

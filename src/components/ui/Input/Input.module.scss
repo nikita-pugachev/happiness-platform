@@ -42,12 +42,18 @@ input:focus {
     color: var(--border-error);
     font-family: var(--font);
     font-size: var(--font-size-support);
+    display: block;
+    width: 100%;
+    word-break: break-word;
 }
 
 .hint {
     color: var(--font-color);
     font-family: var(--font);
     font-size: var(--font-size-support);
+    display: block;
+    width: 100%;
+    word-break: break-word;
 }
 
 .categoryIcon {
@@ -64,6 +70,7 @@ input:focus {
     background: transparent;
     padding: 0;
 }
+
 .iconContainer {
     position: absolute;
     right: 12px;

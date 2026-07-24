@@ -10,7 +10,7 @@ interface IconButtonProps {
 
 export const IconButton = ({ src, alt, label, onClick }: IconButtonProps) => {
     return (
-        <div>
+        <div className={styles.container}>
             <button className={styles.icon_button} onClick={onClick}>
                 <Image src={src} alt={alt} className={styles.icon} />
             </button>
