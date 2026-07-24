@@ -1,0 +1,38 @@
+.register_page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.title {
+    font-family: var(--font);
+    font-weight: var(--font-weight-title);
+    font-size: var(--font-size-title);
+    color: var(--font-color);
+}
+
+.input_form {
+    width: 100%;
+}
+
+.button_submit {
+    width: 100%;
+}
+
+.link {
+    text-decoration: none;
+    color: var(--font-color);
+    font-family: var(--font);
+    font-size: var(--font-size-support);
+    font-weight: var(--font-weight-support);
+}
