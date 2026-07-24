@@ -58,7 +58,11 @@ export const Header = () => {
                             </>
                         ) : (
                             <>
-                                <Button variant="secondary" className={styles.link_button}>
+                                <Button 
+                                    variant="secondary" 
+                                    className={styles.link_button}
+                                    onClick={() => { closeMenu(); router.push('/profile'); }}
+                                >
                                     Личный кабинет
                                 </Button>
                                 <Button variant="secondary" className={styles.link_button}>
