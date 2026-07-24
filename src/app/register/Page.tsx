@@ -1,11 +1,16 @@
 'use client'
 import styles from './register.module.scss';
 import Link from "next/link";
+import Image from 'next/image';
+import Show from '@/assets/images/icons/show-eye.svg';
+import Hide from '@/assets/images/icons/hide-eye.svg';
 import { useState } from "react";
 import { Input } from "@/components/ui/Input/Input";
 import { Button } from "@/components/ui/Button/Button";
+import { IconButton } from "@/components/ui/IconButton/IconButton";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
+import ArrowLeftIcon from "@/assets/images/icons/arrow-left.svg";
 
 export default function Page() {
   const router = useRouter();
@@ -53,6 +58,9 @@ export default function Page() {
 
   return (
     <div className={styles.register_page}>
+      <Link href="/" className={styles.back_link} aria-label="На главную">
+        <IconButton src={ArrowLeftIcon} alt="Назад на главную" />
+      </Link>
       <form className={styles.form} onSubmit={handleSubmit}>
         <h2 className={styles.title}>Регистрация</h2>
         <Input
@@ -84,15 +92,19 @@ export default function Page() {
             setPassword(e.target.value);
             if (error) setError(null);
           }}
+          onClick={() => setShow(!show)}
           id="password"
           hint={
-            !password && !error
+            password.length > 0 && password.length < 6 && !error
               ? "Пароль должен содержать не менее 6-ти символов"
               : undefined
           }
           error={error}
           value={password}
           required
+          icon={
+            !show ? (<Image src={Hide} alt="Скрыть пароль" />) : (<Image src={Show} alt="Показать пароль" />)
+          }
         />
         <Button
           className={styles.button_submit}

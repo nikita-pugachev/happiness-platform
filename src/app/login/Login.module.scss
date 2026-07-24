@@ -1,9 +1,21 @@
 .login_page {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100vw;
     height: 100vh;
+    padding: 16px;
+}
+
+.back_link {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
 }
 
 .form {
@@ -12,6 +24,8 @@
     align-items: center;
     justify-content: center;
     gap: 12px;
+    width: 100%;
+    max-width: 320px;
 }
 
 .title {
@@ -35,4 +49,11 @@
     font-family: var(--font);
     font-size: var(--font-size-support);
     font-weight: var(--font-weight-support);
+}
+
+.error {
+    font-family: var(--font);
+    font-size: var(--font-size-support);
+    font-weight: var(--font-weight-support);
+    color: var(--font-color-error);
 }

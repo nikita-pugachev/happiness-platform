@@ -43,14 +43,14 @@ export const Header = () => {
                             <>
                                 <Button 
                                     variant="main" 
-                                    className={styles.action_btn}
+                                    className={styles.link_button}
                                     onClick={() => { closeMenu(); router.push('/login'); }}
                                 >
                                     Войти
                                 </Button>
                                 <Button 
                                     variant="secondary" 
-                                    className={styles.action_btn}
+                                    className={styles.link_button}
                                     onClick={() => { closeMenu(); router.push('/register'); }}
                                 >
                                     Зарегистрироваться
@@ -58,18 +58,18 @@ export const Header = () => {
                             </>
                         ) : (
                             <>
-                                <Button variant="secondary" className={styles.action_btn}>
+                                <Button variant="secondary" className={styles.link_button}>
                                     Личный кабинет
                                 </Button>
-                                <Button variant="secondary" className={styles.action_btn}>
+                                <Button variant="secondary" className={styles.link_button}>
                                     Избранное
                                 </Button>
-                                <Button variant="secondary" className={styles.action_btn}>
+                                <Button variant="secondary" className={styles.link_button}>
                                     История покупок
                                 </Button>
                                 <Button 
                                     variant="main" 
-                                    className={styles.action_btn}
+                                    className={styles.link_button}
                                     onClick={handleSignOut}
                                 >
                                     Выход
