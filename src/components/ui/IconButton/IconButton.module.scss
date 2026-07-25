@@ -3,6 +3,12 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 6px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--font-color);
+    font-family: var(--font);
 }
 
 .icon_button {
@@ -14,7 +20,6 @@
     width: 40px;
     height: 40px;
     border-radius: 12px;
-    cursor: pointer;
 }
 
 .icon {
@@ -23,8 +28,27 @@
 }
 
 .label {
+    width: 100%;
+    max-width: 100%;
     font-family: var(--font);
     font-size: var(--font-size-support);
     color: var(--font-color);
     font-weight: var(--font-weight-support);
+    text-align: center;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.container.active {
+    .icon_button {
+        border-color: var(--border-button);
+        background-color: var(--bg-disabled);
+    }
+
+    .label {
+        font-weight: var(--font-weight-support);
+        color: var(--border-button);
+    }
 }

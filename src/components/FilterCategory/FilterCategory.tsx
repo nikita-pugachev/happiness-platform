@@ -1,7 +1,7 @@
 "use client";
 import styles from "./FilterCategory.module.scss";
 import { FC, useState } from "react";
-import Image from "next/image";
+import { IconButton } from "@/components/ui/IconButton/IconButton";
 import AllCategoryIcon from "@/assets/images/icons/all-category.svg";
 import HugsIcon from "@/assets/images/icons/hugs.svg";
 import WordsIcon from "@/assets/images/icons/words.svg";
@@ -39,27 +39,25 @@ export const FilterCategory: FC<FilterCategoryProps> = ({
   };
 
   return (
-    <nav className={styles.filter_container} aria-label="Категории товаров">
-      <ul className={styles.category_list}>
-        {CATEGORIES.map((category) => {
-          const isActive = currentCategory === category.slug;
-          return (
-            <li key={category.id} className={styles.category_item}>
-              <button
-                type="button"
-                className={`${styles.category_button} ${isActive ? styles.active : ""}`}
-                onClick={() => handleCategoryClick(category.slug)}
-                aria-pressed={isActive}
-              >
-                <div className={styles.icon_wrapper}>
-                  <Image src={category.icon} alt={category.name} className={styles.icon_image} />
-                </div>
-                <span className={styles.category_name}>{category.name}</span>
-              </button>
-            </li>
-          );
-        })}
-      </ul>
-    </nav>
+    <div className={styles.filter_container}>
+      <div className={styles.scroll_wrapper}>
+        <ul className={styles.category_list}>
+          {CATEGORIES.map((category) => {
+            const isActive = currentCategory === category.slug;
+            return (
+              <li key={category.id} className={styles.category_item}>
+                <IconButton
+                  src={category.icon}
+                  alt={category.name}
+                  label={category.name}
+                  isActive={isActive}
+                  onClick={() => handleCategoryClick(category.slug)}
+                />
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </div>
   );
 };
