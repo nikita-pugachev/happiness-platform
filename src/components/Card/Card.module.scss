@@ -52,7 +52,8 @@
 
 .cart_button {
     width: 100%;
-    padding: 8px 12px;
+    height: 38px;
+    padding: 0 12px;
     font-size: var(--font-size-support);
     font-family: var(--font);
     font-weight: var(--font-weight-support);
@@ -63,6 +64,7 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    height: 38px;
     background-color: var(--bg-disabled);
     border: 1px solid var(--border-button);
     border-radius: 12px;
