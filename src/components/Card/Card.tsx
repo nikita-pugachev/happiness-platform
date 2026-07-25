@@ -72,7 +72,7 @@ export const Card: FC<CardProps> = ({
                     <div className={styles.counter_wrapper} onClick={(e) => e.stopPropagation()}>
                         <button
                             type="button"
-                            className={styles.counter_btn}
+                            className={styles.counter_button}
                             onClick={handleDecrement}
                             aria-label="Уменьшить количество"
                         >
@@ -81,7 +81,7 @@ export const Card: FC<CardProps> = ({
                         <span className={styles.counter_value}>{quantity}</span>
                         <button
                             type="button"
-                            className={styles.counter_btn}
+                            className={styles.counter_button}
                             onClick={handleIncrement}
                             aria-label="Увеличить количество"
                         >
