@@ -24,15 +24,17 @@ export const CardList: FC<CardListProps> = ({
 }) => {
     const [products, setProducts] = useState<CardProps[]>([]);
     const [error, setError] = useState<string | null>(null);
-    const supabase = createClient();
 
     useEffect(() => {
         let isMounted = true;
+        const supabase = createClient();
 
         const fetchProducts = async () => {
             setError(null);
             try {
-                const { data, error: fetchError } = await supabase.from("products").select("*, categories(slug)");
+                const { data, error: fetchError } = await supabase
+                    .from("products")
+                    .select("*, categories(slug)");
 
                 if (!isMounted) return;
 
