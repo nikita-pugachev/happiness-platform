@@ -1,0 +1,110 @@
+.header {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: clamp(1rem, 3vw, 2rem);
+    gap: 20px;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mobile_menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+    .menu_icon {
+        position: relative;
+        display: block;
+        width: 40px;
+        height: 2px;
+        background-color: currentColor;
+        border-radius: 2px;
+
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 7px;
+            width: 20px;
+            height: 2px;
+            background-color: currentColor;
+            border-radius: 2px;
+        }
+    }
+}
+
+.menu {
+    position: fixed;
+    inset: 0;
+    background-color: var(--bg-utility);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateX(-100%);
+    transition: transform 0.4s ease, opacity 0.3s ease, visibility 0.4s;
+
+    &.is_visible {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateX(0);
+    }
+}
+
+.close_button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.close_icon {
+    width: 24px;
+    height: 24px;
+}
+
+.menu_content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    max-width: 320px;
+}
+
+.link_button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.desktop_nav {
+    display: none;
+}
