@@ -8,11 +8,13 @@ import { IconButton } from "@/components/ui/IconButton/IconButton";
 import { Button } from "@/components/ui/Button/Button";
 import { Search } from "@/components/ui/Search/Search";
 import { useAuth } from "@/hooks/useAuth";
+import { useCart } from "@/hooks/useCart";
 import { useRouter } from "next/navigation";
 
 export const Header = () => {
   const [open, setOpen] = useState(false);
   const { user, signOut } = useAuth();
+  const { totalCount } = useCart();
   const router = useRouter();
 
   const toggleMenu = () => {
@@ -118,7 +120,11 @@ export const Header = () => {
             </Button>
           )}
         </div>
-        <IconButton src={CartIcon} alt="Корзина" />
+        <IconButton
+          src={CartIcon}
+          alt="Корзина"
+          stateInfo={totalCount > 0 ? String(totalCount) : undefined}
+        />
       </div>
       <Search placeholder="Поиск..." />
     </header>

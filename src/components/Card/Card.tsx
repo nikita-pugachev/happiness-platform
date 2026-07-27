@@ -1,8 +1,9 @@
 "use client";
 import styles from './Card.module.scss';
 import Image from 'next/image';
-import { FC, useState, MouseEvent } from 'react';
+import { FC, MouseEvent } from 'react';
 import { Button } from '@/components/ui/Button/Button';
+import { useCart } from '@/hooks/useCart';
 
 export interface CardProps {
     id?: string;
@@ -15,32 +16,35 @@ export interface CardProps {
 }
 
 export const Card: FC<CardProps> = ({
+    id,
     title,
     price,
     imageSrc,
     onCardClick,
     onQuantityChange,
 }) => {
-    const [quantity, setQuantity] = useState(0);
+    const { getItemQuantity, updateQuantity } = useCart();
+    const productId = id || title;
+    const quantity = getItemQuantity(productId);
 
     const handleAddToCart = (e: MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
         const newQty = 1;
-        setQuantity(newQty);
+        updateQuantity({ id: productId, title, price, imageSrc }, newQty);
         onQuantityChange?.(newQty);
     };
 
     const handleIncrement = (e: MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
         const newQty = quantity + 1;
-        setQuantity(newQty);
+        updateQuantity({ id: productId, title, price, imageSrc }, newQty);
         onQuantityChange?.(newQty);
     };
 
     const handleDecrement = (e: MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
         const newQty = Math.max(0, quantity - 1);
-        setQuantity(newQty);
+        updateQuantity({ id: productId, title, price, imageSrc }, newQty);
         onQuantityChange?.(newQty);
     };
 

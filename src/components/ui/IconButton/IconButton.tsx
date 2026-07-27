@@ -8,9 +8,11 @@ export interface IconButtonProps {
     onClick?: () => void;
     isActive?: boolean;
     className?: string;
+    stateInfo?: string;
+    setStateInfo?: () => void;
 }
 
-export const IconButton = ({ src, alt, label, onClick, isActive, className }: IconButtonProps) => {
+export const IconButton = ({ src, alt, label, onClick, isActive, className, stateInfo, setStateInfo }: IconButtonProps) => {
     return (
         <button
             type="button"
@@ -21,6 +23,11 @@ export const IconButton = ({ src, alt, label, onClick, isActive, className }: Ic
             <div className={styles.icon_button}>
                 <Image src={src} alt={alt} className={styles.icon} />
             </div>
+            {stateInfo && (
+                <div className={styles.info}>
+                    <span className={styles.state_info}>{stateInfo}</span>
+                </div>
+            )}
             {label && <span className={styles.label}>{label}</span>}
         </button>
     );
