@@ -84,10 +84,24 @@ export const Header = () => {
                 >
                   Личный кабинет
                 </Button>
-                <Button variant="secondary" className={styles.link_button}>
+                <Button
+                  variant="secondary"
+                  className={styles.link_button}
+                  onClick={() => {
+                    closeMenu();
+                    router.push("/favorite");
+                  }}
+                >
                   Избранное
                 </Button>
-                <Button variant="secondary" className={styles.link_button}>
+                <Button
+                  variant="secondary"
+                  className={styles.link_button}
+                  onClick={() => {
+                    closeMenu();
+                    router.push("/history");
+                  }}
+                >
                   История покупок
                 </Button>
                 <Button
@@ -100,25 +114,6 @@ export const Header = () => {
               </>
             )}
           </div>
-        </div>
-        <div className={styles.desktop_nav}>
-          {!user ? (
-            <>
-              <Button variant="main" onClick={() => router.push("/login")}>
-                Войти
-              </Button>
-              <Button
-                variant="secondary"
-                onClick={() => router.push("/register")}
-              >
-                Зарегистрироваться
-              </Button>
-            </>
-          ) : (
-            <Button variant="main" onClick={handleSignOut}>
-              Выход
-            </Button>
-          )}
         </div>
         <IconButton
           src={CartIcon}
