@@ -25,7 +25,6 @@
     justify-content: center;
     gap: 16px;
     width: 100%;
-    max-width: 320px;
 }
 
 .avatar_section {
@@ -98,11 +97,6 @@
     align-self: flex-start;
     padding-left: 4px;
     margin-top: 4px;
-    transition: opacity 0.2s ease;
-
-    &:hover {
-        opacity: 0.8;
-    }
 }
 
 .button_submit {
@@ -111,7 +105,7 @@
 }
 
 .error {
-    color: var(--border-error, #ff4d4f);
+    color: var(--border-error);
     font-family: var(--font);
     font-size: var(--font-size-support);
     display: block;

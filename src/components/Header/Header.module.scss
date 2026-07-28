@@ -97,7 +97,6 @@
   flex-direction: column;
   gap: 16px;
   width: 100%;
-  max-width: 320px;
 }
 
 .link_button {
@@ -106,8 +105,4 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-}
-
-.desktop_nav {
-  display: none;
 }

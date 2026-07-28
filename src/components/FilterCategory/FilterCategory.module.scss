@@ -2,7 +2,6 @@
     width: 100%;
     margin: 0 auto;
     padding: 16px;
-    box-sizing: border-box;
 }
 
 .scroll_wrapper {
@@ -19,7 +18,6 @@
 
 .category_list {
     display: flex;
-    align-items: flex-start;
     gap: 8px;
     margin: 0;
     padding: 0;
@@ -31,7 +29,6 @@
     flex: 0 0 calc((100% - 24px) / 4);
     width: calc((100% - 24px) / 4);
     max-width: calc((100% - 24px) / 4);
-    box-sizing: border-box;
 
     > button {
         width: 100%;
