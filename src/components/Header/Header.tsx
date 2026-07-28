@@ -84,10 +84,24 @@ export const Header = () => {
                 >
                   Личный кабинет
                 </Button>
-                <Button variant="secondary" className={styles.link_button}>
+                <Button
+                  variant="secondary"
+                  className={styles.link_button}
+                  onClick={() => {
+                    closeMenu();
+                    router.push("/favorite");
+                  }}
+                >
                   Избранное
                 </Button>
-                <Button variant="secondary" className={styles.link_button}>
+                <Button
+                  variant="secondary"
+                  className={styles.link_button}
+                  onClick={() => {
+                    closeMenu();
+                    router.push("/history");
+                  }}
+                >
                   История покупок
                 </Button>
                 <Button
