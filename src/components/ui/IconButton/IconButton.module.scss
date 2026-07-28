@@ -1,4 +1,5 @@
 .container {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -51,4 +52,24 @@
         font-weight: var(--font-weight-support);
         color: var(--border-button);
     }
+}
+
+.info {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    border-radius: 9999999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    background-color: var(--font-color-success);
+}
+
+.state_info {
+    font-family: var(--font);
+    font-size: 10px;
+    color: var(--font-color);
+    font-weight: var(--font-weight-support);
 }
