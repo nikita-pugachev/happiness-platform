@@ -1,9 +1,14 @@
 "use client";
 import styles from './Card.module.scss';
 import Image from 'next/image';
-import { FC, MouseEvent } from 'react';
+import Like from '@/assets/images/icons/heart.svg';
+import LikeActive from '@/assets/images/icons/heart-is-like.svg';
+import { FC, MouseEvent, useState, useEffect } from 'react';
 import { Button } from '@/components/ui/Button/Button';
 import { useCart } from '@/hooks/useCart';
+import { useAuth } from '@/hooks/useAuth';
+import { useRouter } from 'next/navigation';
+import { createClient } from '@/utils/supabase/client';
 
 export interface CardProps {
     id?: string;
@@ -23,9 +28,78 @@ export const Card: FC<CardProps> = ({
     onCardClick,
     onQuantityChange,
 }) => {
+    const router = useRouter();
     const { getItemQuantity, updateQuantity } = useCart();
     const productId = id || title;
     const quantity = getItemQuantity(productId);
+    const { user } = useAuth();
+    const [isLike, setLike] = useState<boolean>(false);
+
+    useEffect(() => {
+        const targetId = id || productId;
+        if (!user || !targetId) return;
+
+        const supabase = createClient();
+
+        const checkFavorite = async () => {
+            const { data } = await supabase
+                .from('favorites')
+                .select('user_id, product_id')
+                .eq('user_id', user.id)
+                .eq('product_id', targetId)
+                .maybeSingle();
+
+            if (data) {
+                setLike(true);
+            }
+        };
+
+        checkFavorite();
+    }, [user, id, productId]);
+
+    const handleAddFavorite = async (e: MouseEvent) => {
+        e.stopPropagation();
+        if (!user) {
+            router.push('/login');
+            return;
+        }
+
+        const targetId = id || productId;
+        const nextLikeState = !isLike;
+        setLike(nextLikeState);
+
+        const supabase = createClient();
+
+        try {
+            if (nextLikeState) {
+                const { error } = await supabase
+                    .from('favorites')
+                    .upsert(
+                        { user_id: user.id, product_id: targetId },
+                        { onConflict: 'user_id,product_id' }
+                    );
+
+                if (error) {
+                    console.error("Ошибка при добавлении в избранное:", error.message || error);
+                    setLike(!nextLikeState);
+                }
+            } else {
+                const { error } = await supabase
+                    .from('favorites')
+                    .delete()
+                    .eq('user_id', user.id)
+                    .eq('product_id', targetId);
+
+                if (error) {
+                    console.error("Ошибка при удалении из избранного:", error.message || error);
+                    setLike(!nextLikeState);
+                }
+            }
+        } catch (err) {
+            console.error("Ошибка при работе с избранным:", err);
+            setLike(!nextLikeState);
+        }
+    };
 
     const handleAddToCart = (e: MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
@@ -51,6 +125,9 @@ export const Card: FC<CardProps> = ({
     return (
         <div className={styles.card} onClick={onCardClick}>
             <div className={styles.image_container}>
+                <button type='button' onClick={handleAddFavorite} className={styles.favorite_button}>
+                    <Image src={!isLike ? Like : LikeActive} alt="Добавить в избранное" className={styles.favorite_image}/>
+                </button>
                 <Image
                     src={imageSrc}
                     alt={title}

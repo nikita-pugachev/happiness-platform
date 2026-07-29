@@ -86,6 +86,7 @@ export const CardList: FC<CardListProps> = ({
                 {products.map((product, index) => (
                     <Card
                         key={product.id || index}
+                        id={product.id}
                         title={product.title}
                         price={product.price}
                         imageSrc={product.imageSrc}
