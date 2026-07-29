@@ -1,88 +1,88 @@
 .inputWrapper {
-    border: none;
-    padding: 0;
-    background-color: transparent;
-    width: 100%;
+  border: none;
+  padding: 0;
+  background-color: transparent;
+  width: 100%;
 }
 
 .inputContainer {
-    position: relative;
-    display: flex;
-    border: none;
-    width: 100%;
-    padding: 0;
-    background-color: transparent;
+  position: relative;
+  display: flex;
+  border: none;
+  width: 100%;
+  padding: 0;
+  background-color: transparent;
 }
 
 .label {
-    color: var(--font-color);
-    font-family: var(--font);
-    font-size: var(--font-size-support);
-    background-color: transparent;
-    padding-left: 4px;
+  color: var(--font-color);
+  font-family: var(--font);
+  font-size: var(--font-size-support);
+  background-color: transparent;
+  padding-left: 4px;
 }
 
 .input {
-    width: 100%;
-    padding: 12px 24px;
-    border-radius: 8px;
-    border: 1px solid var(--bg-utility);
-    font-family: var(--font);
-    color: var(--font-color);
-    font-size: var(--font-size-main);
-    font-weight: var(--font-weight-support);
+  width: 100%;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: 1px solid var(--bg-utility);
+  font-family: var(--font);
+  color: var(--font-color);
+  font-size: var(--font-size-main);
+  font-weight: var(--font-weight-support);
 }
 
 input:focus {
-    outline: none;
-    border: 1px solid var(--border-button);
+  outline: none;
+  border: 1px solid var(--border-button);
 }
 
 .error {
-    color: var(--border-error);
-    font-family: var(--font);
-    font-size: var(--font-size-support);
-    display: block;
-    width: 100%;
-    word-break: break-word;
+  color: var(--border-error);
+  font-family: var(--font);
+  font-size: var(--font-size-support);
+  display: block;
+  width: 100%;
+  word-break: break-word;
 }
 
 .hint {
-    color: var(--font-color);
-    font-family: var(--font);
-    font-size: var(--font-size-support);
-    display: block;
-    width: 100%;
-    word-break: break-word;
+  color: var(--font-color);
+  font-family: var(--font);
+  font-size: var(--font-size-support);
+  display: block;
+  width: 100%;
+  word-break: break-word;
 }
 
 .categoryIcon {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
-    border: none;
-    background: transparent;
-    padding: 0;
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: transparent;
+  padding: 0;
 }
 
 .iconContainer {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    padding: 0;
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
 }

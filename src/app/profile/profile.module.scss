@@ -1,124 +1,124 @@
 .profile_page {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    min-height: 100vh;
-    padding: 32px 16px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  min-height: 100vh;
+  padding: 32px 16px;
 }
 
 .back_link {
-    position: absolute;
-    top: 24px;
-    left: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
 }
 
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
 }
 
 .avatar_section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
 }
 
 .avatar_wrapper {
-    position: relative;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    overflow: hidden;
-    background-color: var(--bg-utility);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    border: 2px solid var(--border-button);
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: var(--bg-utility);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 2px solid var(--border-button);
 }
 
 .avatar_image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
 }
 
 .avatar_placeholder {
-    font-family: var(--font);
-    font-size: 32px;
-    font-weight: var(--font-weight-title);
-    color: var(--font-color);
-    text-transform: uppercase;
+  font-family: var(--font);
+  font-size: 32px;
+  font-weight: var(--font-weight-title);
+  color: var(--font-color);
+  text-transform: uppercase;
 }
 
 .file_input {
-    display: none;
+  display: none;
 }
 
 .user_name_display {
-    font-family: var(--font);
-    font-weight: var(--font-weight-support);
-    font-size: var(--font-size-main);
-    color: var(--font-color);
-    text-align: center;
-    opacity: 0.85;
+  font-family: var(--font);
+  font-weight: var(--font-weight-support);
+  font-size: var(--font-size-main);
+  color: var(--font-color);
+  text-align: center;
+  opacity: 0.85;
 }
 
 .form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
 }
 
 .input_form {
-    width: 100%;
+  width: 100%;
 }
 
 .change_password_span {
-    color: var(--font-color);
-    font-family: var(--font);
-    font-size: var(--font-size-support);
-    font-weight: var(--font-weight-support);
-    cursor: pointer;
-    text-decoration: underline;
-    align-self: flex-start;
-    padding-left: 4px;
-    margin-top: 4px;
+  color: var(--font-color);
+  font-family: var(--font);
+  font-size: var(--font-size-support);
+  font-weight: var(--font-weight-support);
+  cursor: pointer;
+  text-decoration: underline;
+  align-self: flex-start;
+  padding-left: 4px;
+  margin-top: 4px;
 }
 
 .button_submit {
-    width: 100%;
-    margin-top: 8px;
+  width: 100%;
+  margin-top: 8px;
 }
 
 .error {
-    color: var(--border-error);
-    font-family: var(--font);
-    font-size: var(--font-size-support);
-    display: block;
-    width: 100%;
-    word-break: break-word;
-    text-align: center;
+  color: var(--border-error);
+  font-family: var(--font);
+  font-size: var(--font-size-support);
+  display: block;
+  width: 100%;
+  word-break: break-word;
+  text-align: center;
 }
 
 .success {
-    color: var(--font-color-success);
-    font-family: var(--font);
-    font-size: var(--font-size-support);
-    display: block;
-    width: 100%;
-    text-align: center;
+  color: var(--font-color-success);
+  font-family: var(--font);
+  font-size: var(--font-size-support);
+  display: block;
+  width: 100%;
+  text-align: center;
 }

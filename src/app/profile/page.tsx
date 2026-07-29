@@ -1,5 +1,5 @@
-'use client'
-import styles from './profile.module.scss';
+"use client";
+import styles from "./profile.module.scss";
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useRef } from "react";
@@ -17,7 +17,9 @@ export default function Page() {
 
   const [name, setName] = useState(() => user?.user_metadata?.name || "");
   const [email, setEmail] = useState(() => user?.email || "");
-  const [avatarUrl, setAvatarUrl] = useState<string | null>(() => user?.user_metadata?.avatar_url || null);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(
+    () => user?.user_metadata?.avatar_url || null,
+  );
 
   const [prevUser, setPrevUser] = useState(user);
 
@@ -48,20 +50,20 @@ export default function Page() {
     setLoading(true);
 
     try {
-      const fileExt = file.name.split('.').pop();
+      const fileExt = file.name.split(".").pop();
       const filePath = `${user.id}/${Date.now()}.${fileExt}`;
 
       const { error: uploadError } = await supabase.storage
-        .from('avatars')
+        .from("avatars")
         .upload(filePath, file, { upsert: true });
 
       if (uploadError) {
         throw uploadError;
       }
 
-      const { data: { publicUrl } } = supabase.storage
-        .from('avatars')
-        .getPublicUrl(filePath);
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from("avatars").getPublicUrl(filePath);
 
       const { error: updateError } = await supabase.auth.updateUser({
         data: { avatar_url: publicUrl },
@@ -75,7 +77,8 @@ export default function Page() {
       await refreshUser();
       setSuccess("Аватарка успешно обновлена!");
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Ошибка при загрузке аватарки";
+      const message =
+        err instanceof Error ? err.message : "Ошибка при загрузке аватарки";
       setError(message);
     } finally {
       setLoading(false);
@@ -89,7 +92,11 @@ export default function Page() {
     setLoading(true);
 
     try {
-      const updateData: { email?: string; password?: string; data?: { name?: string } } = {};
+      const updateData: {
+        email?: string;
+        password?: string;
+        data?: { name?: string };
+      } = {};
 
       if (name !== (user?.user_metadata?.name || "")) {
         updateData.data = { name };
@@ -121,14 +128,19 @@ export default function Page() {
       setNewPassword("");
       setShowPasswordInput(false);
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Ошибка при сохранении данных";
+      const message =
+        err instanceof Error ? err.message : "Ошибка при сохранении данных";
       setError(message);
     } finally {
       setLoading(false);
     }
   };
 
-  const firstLetter = name ? name.charAt(0).toUpperCase() : (email ? email.charAt(0).toUpperCase() : "U");
+  const firstLetter = name
+    ? name.charAt(0).toUpperCase()
+    : email
+      ? email.charAt(0).toUpperCase()
+      : "U";
 
   return (
     <div className={styles.profile_page}>
@@ -138,7 +150,11 @@ export default function Page() {
 
       <div className={styles.container}>
         <div className={styles.avatar_section}>
-          <div className={styles.avatar_wrapper} onClick={handleAvatarClick} title="Нажмите, чтобы изменить аватарку">
+          <div
+            className={styles.avatar_wrapper}
+            onClick={handleAvatarClick}
+            title="Нажмите, чтобы изменить аватарку"
+          >
             {avatarUrl ? (
               <Image
                 src={avatarUrl}

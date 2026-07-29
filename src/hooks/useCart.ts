@@ -1,5 +1,5 @@
-import { useCartContext } from '@/provider/CartProvider';
+import { useCartContext } from "@/provider/CartProvider";
 
 export const useCart = () => {
-    return useCartContext();
+  return useCartContext();
 };

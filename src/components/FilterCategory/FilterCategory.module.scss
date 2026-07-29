@@ -1,36 +1,36 @@
 .filter_container {
-    width: 100%;
-    margin: 0 auto;
-    padding: 16px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 16px;
 }
 
 .scroll_wrapper {
-    width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 
-    &::-webkit-scrollbar {
-        display: none;
-    }
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .category_list {
-    display: flex;
-    gap: 8px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    width: max-content;
+  display: flex;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  width: max-content;
 }
 
 .category_item {
-    flex: 0 0 calc((100% - 24px) / 4);
-    width: calc((100% - 24px) / 4);
-    max-width: calc((100% - 24px) / 4);
+  flex: 0 0 calc((100% - 24px) / 4);
+  width: calc((100% - 24px) / 4);
+  max-width: calc((100% - 24px) / 4);
 
-    > button {
-        width: 100%;
-    }
+  > button {
+    width: 100%;
+  }
 }

@@ -44,10 +44,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((event: AuthChangeEvent, session: Session | null) => {
-      setUser(session?.user || null);
-      setLoading(false);
-    });
+    } = supabase.auth.onAuthStateChange(
+      (event: AuthChangeEvent, session: Session | null) => {
+        setUser(session?.user || null);
+        setLoading(false);
+      },
+    );
 
     return () => {
       subscription.unsubscribe();

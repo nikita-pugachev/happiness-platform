@@ -1,9 +1,9 @@
-'use client'
-import styles from './register.module.scss';
+"use client";
+import styles from "./register.module.scss";
 import Link from "next/link";
-import Image from 'next/image';
-import Show from '@/assets/images/icons/show-eye.svg';
-import Hide from '@/assets/images/icons/hide-eye.svg';
+import Image from "next/image";
+import Show from "@/assets/images/icons/show-eye.svg";
+import Hide from "@/assets/images/icons/hide-eye.svg";
 import { useState } from "react";
 import { Input } from "@/components/ui/Input/Input";
 import { Button } from "@/components/ui/Button/Button";
@@ -103,7 +103,11 @@ export default function Page() {
           value={password}
           required
           icon={
-            !show ? (<Image src={Hide} alt="Скрыть пароль" />) : (<Image src={Show} alt="Показать пароль" />)
+            !show ? (
+              <Image src={Hide} alt="Скрыть пароль" />
+            ) : (
+              <Image src={Show} alt="Показать пароль" />
+            )
           }
         />
         <Button

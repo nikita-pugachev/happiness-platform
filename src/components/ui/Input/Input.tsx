@@ -1,7 +1,6 @@
-'use client'
+"use client";
 import styles from "./Input.module.scss";
 import { FC } from "react";
-
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   id?: string;
@@ -40,8 +39,18 @@ export const Input: FC<InputProps> = ({
           type={type}
           {...props}
         />
-        {categoryIcon && <span className={styles.categoryIcon}>{categoryIcon}</span>}
-        {icon && <button type="button" onClick={onClick} className={styles.iconContainer}>{icon}</button>}
+        {categoryIcon && (
+          <span className={styles.categoryIcon}>{categoryIcon}</span>
+        )}
+        {icon && (
+          <button
+            type="button"
+            onClick={onClick}
+            className={styles.iconContainer}
+          >
+            {icon}
+          </button>
+        )}
       </div>
       {error && <span className={styles.error}>{error}</span>}
       {hint && <span className={styles.hint}>{hint}</span>}
