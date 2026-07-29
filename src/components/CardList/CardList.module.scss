@@ -1,21 +1,21 @@
 .card_list_container {
-    width: 100%;
-    padding: 16px;
+  width: 100%;
+  padding: 16px;
 }
 
 .grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  width: 100%;
 }
 
 .error_message {
-    display: block;
-    width: 100%;
-    text-align: center;
-    padding: 32px 16px;
-    font-family: var(--font);
-    font-size: var(--font-size-main);
-    color: var(--border-error);
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 32px 16px;
+  font-family: var(--font);
+  font-size: var(--font-size-main);
+  color: var(--border-error);
 }

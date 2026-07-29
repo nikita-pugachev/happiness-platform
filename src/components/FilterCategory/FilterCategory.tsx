@@ -29,7 +29,8 @@ export const FilterCategory: FC<FilterCategoryProps> = ({
 }) => {
   const [internalCategory, setInternalCategory] = useState("all");
 
-  const currentCategory = selectedCategory !== undefined ? selectedCategory : internalCategory;
+  const currentCategory =
+    selectedCategory !== undefined ? selectedCategory : internalCategory;
 
   const handleCategoryClick = (slug: string) => {
     if (selectedCategory === undefined) {
