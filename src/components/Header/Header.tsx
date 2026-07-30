@@ -1,21 +1,17 @@
 "use client";
 import styles from "./Header.module.scss";
 import CartIcon from "@/assets/images/icons/cart.svg";
-import Close from "@/assets/images/icons/close.svg";
-import Image from "next/image";
 import { useState } from "react";
 import { IconButton } from "@/components/ui/IconButton/IconButton";
-import { Button } from "@/components/ui/Button/Button";
 import { Search } from "@/components/ui/Search/Search";
 import { useAuth } from "@/hooks/useAuth";
 import { useCart } from "@/hooks/useCart";
-import { useRouter } from "next/navigation";
+import { Menu } from "@/components/Menu/Menu";
 
 export const Header = () => {
   const [open, setOpen] = useState(false);
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
   const { totalCount } = useCart();
-  const router = useRouter();
 
   const toggleMenu = () => {
     setOpen((prev) => !prev);
@@ -23,11 +19,6 @@ export const Header = () => {
 
   const closeMenu = () => {
     setOpen(false);
-  };
-
-  const handleSignOut = async () => {
-    await signOut();
-    closeMenu();
   };
 
   return (
@@ -40,81 +31,14 @@ export const Header = () => {
         >
           <span className={styles.menu_icon}></span>
         </button>
-        <div className={`${styles.menu} ${open ? styles.is_visible : ""}`}>
-          <button
-            onClick={closeMenu}
-            className={styles.close_button}
-            aria-label="Закрыть меню"
-          >
-            <Image src={Close} alt="Закрыть" className={styles.close_icon} />
-          </button>
-          <div className={styles.menu_content}>
-            {!user ? (
-              <>
-                <Button
-                  variant="main"
-                  className={styles.link_button}
-                  onClick={() => {
-                    closeMenu();
-                    router.push("/login");
-                  }}
-                >
-                  Войти
-                </Button>
-                <Button
-                  variant="secondary"
-                  className={styles.link_button}
-                  onClick={() => {
-                    closeMenu();
-                    router.push("/register");
-                  }}
-                >
-                  Зарегистрироваться
-                </Button>
-              </>
-            ) : (
-              <>
-                <Button
-                  variant="secondary"
-                  className={styles.link_button}
-                  onClick={() => {
-                    closeMenu();
-                    router.push("/profile");
-                  }}
-                >
-                  Личный кабинет
-                </Button>
-                <Button
-                  variant="secondary"
-                  className={styles.link_button}
-                  onClick={() => {
-                    closeMenu();
-                    router.push("/favorite");
-                  }}
-                >
-                  Избранное
-                </Button>
-                <Button
-                  variant="secondary"
-                  className={styles.link_button}
-                  onClick={() => {
-                    closeMenu();
-                    router.push("/history");
-                  }}
-                >
-                  История покупок
-                </Button>
-                <Button
-                  variant="main"
-                  className={styles.link_button}
-                  onClick={handleSignOut}
-                >
-                  Выход
-                </Button>
-              </>
-            )}
-          </div>
-        </div>
+
+        <Menu
+          isOpen={open}
+          onClose={closeMenu}
+          user={user}
+          items={["Личный кабинет", "Избранное", "История покупок"]}
+        />
+
         <IconButton
           src={CartIcon}
           alt="Корзина"
