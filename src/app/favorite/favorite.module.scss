@@ -1,0 +1,12 @@
+.body {
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+}
+
+.title {
+    font-family: var(--font);
+    font-size: var(--font-size-title);
+    font-weight: var(--font-weight-title);
+    color: var(--font-color);
+}

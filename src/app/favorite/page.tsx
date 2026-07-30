@@ -1,7 +1,9 @@
+import styles from './favorite.module.scss';
+
 export default function Page() {
   return (
-    <div>
-      <h1>Избранное</h1>
+    <div className={styles.body}>
+      <h1 className={styles.title}>Избранное</h1>
     </div>
   );
 }
