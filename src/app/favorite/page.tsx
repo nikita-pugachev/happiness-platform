@@ -1,4 +1,4 @@
-import styles from './favorite.module.scss';
+import styles from "./favorite.module.scss";
 
 export default function Page() {
   return (

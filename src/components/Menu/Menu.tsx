@@ -1,12 +1,11 @@
 "use client";
-import styles from './Menu.module.scss';
-import Image from 'next/image';
-import CloseIcon from '@/assets/images/icons/close.svg';
-import { Button } from '@/components/ui/Button/Button';
-import { useRouter } from 'next/navigation';
-import { User } from '@supabase/supabase-js';
-import { useAuth } from '@/hooks/useAuth';
-
+import styles from "./Menu.module.scss";
+import Image from "next/image";
+import CloseIcon from "@/assets/images/icons/close.svg";
+import { Button } from "@/components/ui/Button/Button";
+import { useRouter } from "next/navigation";
+import { User } from "@supabase/supabase-js";
+import { useAuth } from "@/hooks/useAuth";
 
 export interface MenuProps {
   isOpen: boolean;
@@ -18,12 +17,12 @@ export interface MenuProps {
 const DEFAULT_ROUTE_MAP: Record<string, string> = {
   "Главная страница": "/",
   "Личный кабинет": "/profile",
-  "Профиль": "/profile",
-  "Избранное": "/favorite",
+  Профиль: "/profile",
+  Избранное: "/favorite",
   "История покупок": "/history",
 };
 
-export const Menu = ({ isOpen, onClose, items = [], user}: MenuProps) => {
+export const Menu = ({ isOpen, onClose, items = [], user }: MenuProps) => {
   const router = useRouter();
   const { signOut } = useAuth();
 
@@ -35,10 +34,10 @@ export const Menu = ({ isOpen, onClose, items = [], user}: MenuProps) => {
   const handleSignOut = async () => {
     await signOut();
     onClose();
-  }
+  };
 
   return (
-    <div className={`${styles.menu} ${isOpen ? styles.is_visible : ''}`}>
+    <div className={`${styles.menu} ${isOpen ? styles.is_visible : ""}`}>
       <button
         type="button"
         onClick={onClose}
@@ -54,14 +53,14 @@ export const Menu = ({ isOpen, onClose, items = [], user}: MenuProps) => {
             <Button
               variant="main"
               className={styles.link_button}
-              onClick={() => navigateTo('/login')}
+              onClick={() => navigateTo("/login")}
             >
               Войти
             </Button>
             <Button
               variant="secondary"
               className={styles.link_button}
-              onClick={() => navigateTo('/register')}
+              onClick={() => navigateTo("/register")}
             >
               Зарегистрироваться
             </Button>
@@ -73,19 +72,19 @@ export const Menu = ({ isOpen, onClose, items = [], user}: MenuProps) => {
                 key={label}
                 variant="secondary"
                 className={styles.link_button}
-                onClick={() => navigateTo(DEFAULT_ROUTE_MAP[label] || '/')}
+                onClick={() => navigateTo(DEFAULT_ROUTE_MAP[label] || "/")}
               >
                 {label}
               </Button>
             ))}
 
-              <Button
-                variant="main"
-                className={styles.link_button}
-                onClick={handleSignOut}
-              >
-                Выход
-              </Button>
+            <Button
+              variant="main"
+              className={styles.link_button}
+              onClick={handleSignOut}
+            >
+              Выход
+            </Button>
           </>
         )}
       </div>
