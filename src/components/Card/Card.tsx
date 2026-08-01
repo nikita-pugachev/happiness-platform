@@ -18,6 +18,7 @@ export interface CardProps {
   imageSrc: string;
   onCardClick?: () => void;
   onQuantityChange?: (newQuantity: number) => void;
+  onFavoriteToggle?: (isLiked: boolean, id: string) => void;
 }
 
 export const Card: FC<CardProps> = ({
@@ -27,6 +28,7 @@ export const Card: FC<CardProps> = ({
   imageSrc,
   onCardClick,
   onQuantityChange,
+  onFavoriteToggle,
 }) => {
   const router = useRouter();
   const { getItemQuantity, updateQuantity } = useCart();
@@ -67,6 +69,7 @@ export const Card: FC<CardProps> = ({
     const targetId = id || productId;
     const nextLikeState = !isLike;
     setLike(nextLikeState);
+    onFavoriteToggle?.(nextLikeState, targetId);
 
     const supabase = createClient();
 
@@ -85,6 +88,7 @@ export const Card: FC<CardProps> = ({
             error.message || error,
           );
           setLike(!nextLikeState);
+          onFavoriteToggle?.(!nextLikeState, targetId);
         }
       } else {
         const { error } = await supabase
@@ -99,11 +103,13 @@ export const Card: FC<CardProps> = ({
             error.message || error,
           );
           setLike(!nextLikeState);
+          onFavoriteToggle?.(!nextLikeState, targetId);
         }
       }
     } catch (err) {
       console.error("Ошибка при работе с избранным:", err);
       setLike(!nextLikeState);
+      onFavoriteToggle?.(!nextLikeState, targetId);
     }
   };
 
