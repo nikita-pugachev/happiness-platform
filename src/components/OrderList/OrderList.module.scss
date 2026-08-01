@@ -1,0 +1,64 @@
+.order_list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 12px 0;
+  border-top: 1px solid var(--border-button);
+  border-bottom: 1px solid var(--border-button);
+}
+
+.item_title {
+  font-family: var(--font);
+  font-size: var(--font-size-main);
+  font-weight: var(--font-weight-main);
+  color: var(--font-color);
+}
+
+.right_content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.item_quantity {
+  font-family: var(--font);
+  font-size: var(--font-size-main);
+  font-weight: var(--font-weight-main);
+  color: var(--font-color);
+  opacity: 0.8;
+  white-space: nowrap;
+}
+
+.delete_button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+
+  .trash_icon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.empty {
+  font-family: var(--font);
+  font-size: var(--font-size-main);
+  color: var(--font-color);
+  opacity: 0.7;
+  text-align: center;
+  padding: 24px 0;
+  width: 100%;
+}
