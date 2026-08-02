@@ -15,8 +15,11 @@ export const Basket = ({ onClose, onCheckout }: BasketProps) => {
 
   const handlePay = () => {
     if (cartItems.length === 0) return;
-    onCheckout?.();
-    onClose?.();
+    if (onCheckout) {
+      onCheckout();
+    } else if (onClose) {
+      onClose();
+    }
   };
 
   return (
