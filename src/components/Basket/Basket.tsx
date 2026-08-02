@@ -4,6 +4,8 @@ import styles from "./Basket.module.scss";
 import { OrderList } from "@/components/OrderList/OrderList";
 import { Button } from "@/components/ui/Button/Button";
 import { useCart } from "@/hooks/useCart";
+import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 
 export interface BasketProps {
   onClose?: () => void;
@@ -12,9 +14,18 @@ export interface BasketProps {
 
 export const Basket = ({ onClose, onCheckout }: BasketProps) => {
   const { totalPrice, cartItems } = useCart();
+  const { user } = useAuth();
+  const router = useRouter();
 
   const handlePay = () => {
     if (cartItems.length === 0) return;
+
+    if (!user) {
+      onClose?.();
+      router.push("/login");
+      return;
+    }
+
     if (onCheckout) {
       onCheckout();
     } else if (onClose) {
