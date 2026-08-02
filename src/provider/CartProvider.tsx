@@ -32,24 +32,29 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 const LOCAL_STORAGE_KEY = "happiness_cart_items";
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
-    if (typeof window === "undefined") return [];
-    try {
-      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
-      return saved ? JSON.parse(saved) : [];
-    } catch (e) {
-      console.error("Произошла ошибка, попробуйте снова", e);
-      return [];
-    }
-  });
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        setCartItems(JSON.parse(saved));
+      }
+    } catch (e) {
+      console.error("Произошла ошибка, попробуйте снова", e);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
     try {
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(cartItems));
     } catch (e) {
       console.error("Произошла ошибка, попробуйте снова", e);
     }
-  }, [cartItems]);
+  }, [cartItems, isMounted]);
 
   const updateQuantity = (
     product: Omit<CartItem, "quantity">,
@@ -95,13 +100,19 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     setCartItems([]);
   };
 
-  const totalCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  const totalCount = isMounted
+    ? cartItems.reduce((sum, item) => sum + item.quantity, 0)
+    : 0;
 
-  const totalPrice = cartItems.reduce((sum, item) => {
-    const numPrice =
-      typeof item.price === "number" ? item.price : parseFloat(item.price) || 0;
-    return sum + numPrice * item.quantity;
-  }, 0);
+  const totalPrice = isMounted
+    ? cartItems.reduce((sum, item) => {
+        const numPrice =
+          typeof item.price === "number"
+            ? item.price
+            : parseFloat(item.price) || 0;
+        return sum + numPrice * item.quantity;
+      }, 0)
+    : 0;
 
   return (
     <CartContext.Provider
