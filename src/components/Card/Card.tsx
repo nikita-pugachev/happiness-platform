@@ -39,7 +39,10 @@ export const Card: FC<CardProps> = ({
 
   useEffect(() => {
     const targetId = id || productId;
-    if (!user || !targetId) return;
+    if (!user || !targetId) {
+      setLike(false);
+      return;
+    }
 
     const supabase = createClient();
 
@@ -51,9 +54,7 @@ export const Card: FC<CardProps> = ({
         .eq("product_id", targetId)
         .maybeSingle();
 
-      if (data) {
-        setLike(true);
-      }
+      setLike(!!data);
     };
 
     checkFavorite();
