@@ -5,10 +5,10 @@
 
 ## 👀 Взгяд на проект
 <div align="center">
-<img src="./src/assets/images/view1.jpg" width=375 height=700>
-<img src="./src/assets/images/view2.jpg" width=375 height=700>
-<img src="./src/assets/images/view3.jpg" width=375 height=700>
-<img src="./src/assets/images/view4.jpg" width=375 height=700>
+<img src="./src/assets/images/view1.jpg" width=375 height=800>
+<img src="./src/assets/images/view2.jpg" width=375 height=800>
+<img src="./src/assets/images/view3.jpg" width=375 height=800>
+<img src="./src/assets/images/view4.jpg" width=375 height=800>
 </div>
 
 ## 💻 Используемые технологии
