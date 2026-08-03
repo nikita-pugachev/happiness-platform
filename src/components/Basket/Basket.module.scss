@@ -1,0 +1,35 @@
+.basket {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.title {
+  font-family: var(--font);
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-title);
+  color: var(--font-color);
+  margin: 0 0 8px 0;
+  text-align: center;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 16px;
+}
+
+.total_price {
+  font-family: var(--font);
+  font-size: var(--font-size-main);
+  font-weight: var(--font-weight-title);
+  color: var(--font-color);
+  white-space: nowrap;
+}
+
+.pay_button {
+  min-width: 120px;
+}

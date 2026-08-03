@@ -1,43 +1,43 @@
 .button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--font-color);
-    font-family: var(--font);
-    font-size: var(--font-size-main);
-    font-weight: var(--font-weight-support);
-    border-radius: 12px;
-    padding: 16px 24px;
-    border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--font-color);
+  font-family: var(--font);
+  font-size: var(--font-size-main);
+  font-weight: var(--font-weight-support);
+  border-radius: 12px;
+  padding: 16px 24px;
+  border: none;
 }
 
 .button:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .button:focus {
-    outline: none;
+  outline: none;
 }
 
 .main {
-    background-color: var(--bg-color-button-main);
-    border: 1px solid var(--bg-color-button-main);
+  background-color: var(--bg-color-button-main);
+  border: 1px solid var(--bg-color-button-main);
 }
 
 .main:focus {
-    border: 1px solid var(--border-button);
+  border: 1px solid var(--border-button);
 }
 
 .secondary {
-    background-color: transparent;
-    border: 1px solid var(--border-button);
+  background-color: transparent;
+  border: 1px solid var(--border-button);
 }
 
 .secondary:focus {
-    border: 1px solid var(--border-button);
+  border: 1px solid var(--border-button);
 }
 
 .button:disabled {
-    background-color: var(--bg-disabled);
-    cursor: no-drop;
+  background-color: var(--bg-disabled);
+  cursor: no-drop;
 }

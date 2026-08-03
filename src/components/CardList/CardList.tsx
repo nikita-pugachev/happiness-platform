@@ -7,6 +7,7 @@ import { createClient } from "@/utils/supabase/client";
 export interface CardListProps {
   onCardClick?: (product: CardProps) => void;
   selectedCategory?: string;
+  searchQuery?: string;
 }
 
 interface ProductRow {
@@ -21,6 +22,7 @@ interface ProductRow {
 export const CardList: FC<CardListProps> = ({
   onCardClick,
   selectedCategory = "all",
+  searchQuery = "",
 }) => {
   const [products, setProducts] = useState<CardProps[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -40,7 +42,7 @@ export const CardList: FC<CardListProps> = ({
 
         if (fetchError || !data) {
           setError(
-            "Ошибка загрузки данных, пожалуйста, перезагрузите страницу.",
+            "Ошибка загрузки данных, пожалуйста, перезагрузите страницу."
           );
           setProducts([]);
         } else {
@@ -48,7 +50,7 @@ export const CardList: FC<CardListProps> = ({
           const filtered =
             selectedCategory && selectedCategory !== "all"
               ? rows.filter(
-                  (item) => item.categories?.slug === selectedCategory,
+                  (item) => item.categories?.slug === selectedCategory
                 )
               : rows;
 
@@ -65,7 +67,7 @@ export const CardList: FC<CardListProps> = ({
       } catch (err) {
         if (isMounted) {
           setError(
-            "Ошибка загрузки данных, пожалуйста, перезагрузите страницу.",
+            "Ошибка загрузки данных, пожалуйста, перезагрузите страницу."
           );
           setProducts([]);
         }
@@ -78,6 +80,13 @@ export const CardList: FC<CardListProps> = ({
       isMounted = false;
     };
   }, [selectedCategory]);
+
+  const queryClean = searchQuery.trim().toLowerCase();
+  const displayedProducts = queryClean
+    ? products.filter((product) =>
+        product.title.toLowerCase().includes(queryClean)
+      )
+    : products;
 
   if (error) {
     return (
@@ -92,19 +101,23 @@ export const CardList: FC<CardListProps> = ({
       className={styles.card_list_container}
       aria-label="Каталог товаров"
     >
-      <div className={styles.grid}>
-        {products.map((product, index) => (
-          <Card
-            key={product.id || index}
-            id={product.id}
-            title={product.title}
-            price={product.price}
-            imageSrc={product.imageSrc}
-            description={product.description}
-            onCardClick={() => onCardClick?.(product)}
-          />
-        ))}
-      </div>
+      {displayedProducts.length === 0 ? (
+        <span className={styles.empty_message}>Ничего не найдено</span>
+      ) : (
+        <div className={styles.grid}>
+          {displayedProducts.map((product, index) => (
+            <Card
+              key={product.id || index}
+              id={product.id}
+              title={product.title}
+              price={product.price}
+              imageSrc={product.imageSrc}
+              description={product.description}
+              onCardClick={() => onCardClick?.(product)}
+            />
+          ))}
+        </div>
+      )}
     </section>
   );
 };

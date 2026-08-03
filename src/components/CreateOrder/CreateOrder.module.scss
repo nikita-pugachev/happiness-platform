@@ -1,0 +1,34 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.title {
+  font-family: var(--font);
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-title);
+  color: var(--font-color);
+  margin: 0 0 8px 0;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.error {
+  font-family: var(--font);
+  font-size: var(--font-size-main);
+  color: var(--border-error);
+  text-align: center;
+}
+
+.submit_button {
+  width: 100%;
+  margin-top: 8px;
+}

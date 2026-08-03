@@ -24,4 +24,7 @@
   --font-color: #000000;
   --font-color-error: #f50c0c;
   --font-color-success: #52c41a;
+
+  // Layout
+  --category-gap: clamp(6px, 2.5vw, 16px);
 }

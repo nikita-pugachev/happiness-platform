@@ -3,6 +3,8 @@ import styles from "./Card.module.scss";
 import Image from "next/image";
 import Like from "@/assets/images/icons/heart.svg";
 import LikeActive from "@/assets/images/icons/heart-is-like.svg";
+import MinusIcon from "@/assets/images/icons/minus.svg";
+import PlusIcon from "@/assets/images/icons/plus.svg";
 import { FC, MouseEvent, useState, useEffect } from "react";
 import { Button } from "@/components/ui/Button/Button";
 import { useCart } from "@/hooks/useCart";
@@ -18,6 +20,7 @@ export interface CardProps {
   imageSrc: string;
   onCardClick?: () => void;
   onQuantityChange?: (newQuantity: number) => void;
+  onFavoriteToggle?: (isLiked: boolean, id: string) => void;
 }
 
 export const Card: FC<CardProps> = ({
@@ -27,6 +30,7 @@ export const Card: FC<CardProps> = ({
   imageSrc,
   onCardClick,
   onQuantityChange,
+  onFavoriteToggle,
 }) => {
   const router = useRouter();
   const { getItemQuantity, updateQuantity } = useCart();
@@ -37,7 +41,10 @@ export const Card: FC<CardProps> = ({
 
   useEffect(() => {
     const targetId = id || productId;
-    if (!user || !targetId) return;
+    if (!user || !targetId) {
+      setLike(false);
+      return;
+    }
 
     const supabase = createClient();
 
@@ -49,9 +56,7 @@ export const Card: FC<CardProps> = ({
         .eq("product_id", targetId)
         .maybeSingle();
 
-      if (data) {
-        setLike(true);
-      }
+      setLike(!!data);
     };
 
     checkFavorite();
@@ -67,6 +72,7 @@ export const Card: FC<CardProps> = ({
     const targetId = id || productId;
     const nextLikeState = !isLike;
     setLike(nextLikeState);
+    onFavoriteToggle?.(nextLikeState, targetId);
 
     const supabase = createClient();
 
@@ -85,6 +91,7 @@ export const Card: FC<CardProps> = ({
             error.message || error,
           );
           setLike(!nextLikeState);
+          onFavoriteToggle?.(!nextLikeState, targetId);
         }
       } else {
         const { error } = await supabase
@@ -99,11 +106,13 @@ export const Card: FC<CardProps> = ({
             error.message || error,
           );
           setLike(!nextLikeState);
+          onFavoriteToggle?.(!nextLikeState, targetId);
         }
       }
     } catch (err) {
       console.error("Ошибка при работе с избранным:", err);
       setLike(!nextLikeState);
+      onFavoriteToggle?.(!nextLikeState, targetId);
     }
   };
 
@@ -174,7 +183,7 @@ export const Card: FC<CardProps> = ({
               onClick={handleDecrement}
               aria-label="Уменьшить количество"
             >
-              -
+              <Image src={MinusIcon} alt="минус" width={12} height={12} />
             </button>
             <span className={styles.counter_value}>{quantity}</span>
             <button
@@ -183,7 +192,7 @@ export const Card: FC<CardProps> = ({
               onClick={handleIncrement}
               aria-label="Увеличить количество"
             >
-              +
+              <Image src={PlusIcon} alt="плюс" width={12} height={12} />
             </button>
           </div>
         )}

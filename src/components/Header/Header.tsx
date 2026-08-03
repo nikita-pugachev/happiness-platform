@@ -1,51 +1,85 @@
 "use client";
+
 import styles from "./Header.module.scss";
 import CartIcon from "@/assets/images/icons/cart.svg";
-import { useState } from "react";
 import { IconButton } from "@/components/ui/IconButton/IconButton";
 import { Search } from "@/components/ui/Search/Search";
-import { useAuth } from "@/hooks/useAuth";
 import { useCart } from "@/hooks/useCart";
 import { Menu } from "@/components/Menu/Menu";
+import { useState } from "react";
+import { Modal } from "@/components/Modal/Modal";
+import { Basket } from "@/components/Basket/Basket";
+import { CreateOrder } from "@/components/CreateOrder/CreateOrder";
+import { SuccessOrder } from "@/components/SuccessOrder/SuccessOrder";
 
-export const Header = () => {
-  const [open, setOpen] = useState(false);
-  const { user } = useAuth();
+type CartStep = "basket" | "create_order" | "success";
+
+interface HeaderProps {
+  searchQuery?: string;
+  onSearchChange?: (query: string) => void;
+}
+
+export const Header = ({ searchQuery, onSearchChange }: HeaderProps) => {
   const { totalCount } = useCart();
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [cartStep, setCartStep] = useState<CartStep>("basket");
 
-  const toggleMenu = () => {
-    setOpen((prev) => !prev);
+  const openCart = () => {
+    setCartStep("basket");
+    setIsCartOpen(true);
   };
 
-  const closeMenu = () => {
-    setOpen(false);
+  const closeCart = () => {
+    setIsCartOpen(false);
+    setCartStep("basket");
   };
 
   return (
-    <header className={styles.header}>
-      <div className={styles.nav}>
-        <button
-          className={styles.mobile_menu}
-          aria-label="Меню навигации"
-          onClick={toggleMenu}
-        >
-          <span className={styles.menu_icon}></span>
-        </button>
+    <>
+      <header className={styles.header}>
+        <div className={styles.nav}>
+          <Menu
+            showLogout
+            items={["Личный кабинет", "Избранное"]}
+          />
 
-        <Menu
-          isOpen={open}
-          onClose={closeMenu}
-          user={user}
-          items={["Личный кабинет", "Избранное", "История покупок"]}
+          <IconButton
+            src={CartIcon}
+            alt="Корзина"
+            stateInfo={
+              totalCount > 0
+                ? totalCount > 99
+                  ? "99+"
+                  : String(totalCount)
+                : undefined
+            }
+            onClick={openCart}
+          />
+        </div>
+        <Search
+          value={searchQuery}
+          onChange={onSearchChange}
+          placeholder="Поиск..."
         />
+      </header>
 
-        <IconButton
-          src={CartIcon}
-          alt="Корзина"
-          stateInfo={totalCount > 0 ? String(totalCount) : undefined}
-        />
-      </div>
-      <Search placeholder="Поиск..." />
-    </header>
+      <Modal isOpen={isCartOpen} onClose={closeCart}>
+        {cartStep === "basket" && (
+          <Basket
+            onClose={closeCart}
+            onCheckout={() => setCartStep("create_order")}
+          />
+        )}
+        {cartStep === "create_order" && (
+          <CreateOrder
+            onSuccess={() => setCartStep("success")}
+            onBack={() => setCartStep("basket")}
+          />
+        )}
+        {cartStep === "success" && (
+          <SuccessOrder onClose={closeCart} />
+        )}
+      </Modal>
+    </>
   );
 };
