@@ -14,7 +14,12 @@ import { SuccessOrder } from "@/components/SuccessOrder/SuccessOrder";
 
 type CartStep = "basket" | "create_order" | "success";
 
-export const Header = () => {
+interface HeaderProps {
+  searchQuery?: string;
+  onSearchChange?: (query: string) => void;
+}
+
+export const Header = ({ searchQuery, onSearchChange }: HeaderProps) => {
   const { totalCount } = useCart();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [cartStep, setCartStep] = useState<CartStep>("basket");
@@ -45,7 +50,11 @@ export const Header = () => {
             onClick={openCart}
           />
         </div>
-        <Search placeholder="Поиск..." />
+        <Search
+          value={searchQuery}
+          onChange={onSearchChange}
+          placeholder="Поиск..."
+        />
       </header>
 
       <Modal isOpen={isCartOpen} onClose={closeCart}>

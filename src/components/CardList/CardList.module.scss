@@ -19,3 +19,15 @@
   font-size: var(--font-size-main);
   color: var(--border-error);
 }
+
+.empty_message {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 48px 16px;
+  font-family: var(--font);
+  font-size: var(--font-size-main);
+  font-weight: var(--font-weight-support);
+  color: var(--font-color);
+  opacity: 0.7;
+}
