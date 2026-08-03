@@ -14,7 +14,12 @@ import { SuccessOrder } from "@/components/SuccessOrder/SuccessOrder";
 
 type CartStep = "basket" | "create_order" | "success";
 
-export const Header = () => {
+interface HeaderProps {
+  searchQuery?: string;
+  onSearchChange?: (query: string) => void;
+}
+
+export const Header = ({ searchQuery, onSearchChange }: HeaderProps) => {
   const { totalCount } = useCart();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [cartStep, setCartStep] = useState<CartStep>("basket");
@@ -35,17 +40,27 @@ export const Header = () => {
         <div className={styles.nav}>
           <Menu
             showLogout
-            items={["Личный кабинет", "Избранное", "История покупок"]}
+            items={["Личный кабинет", "Избранное"]}
           />
 
           <IconButton
             src={CartIcon}
             alt="Корзина"
-            stateInfo={totalCount > 0 ? String(totalCount) : undefined}
+            stateInfo={
+              totalCount > 0
+                ? totalCount > 99
+                  ? "99+"
+                  : String(totalCount)
+                : undefined
+            }
             onClick={openCart}
           />
         </div>
-        <Search placeholder="Поиск..." />
+        <Search
+          value={searchQuery}
+          onChange={onSearchChange}
+          placeholder="Поиск..."
+        />
       </header>
 
       <Modal isOpen={isCartOpen} onClose={closeCart}>

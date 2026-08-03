@@ -20,6 +20,7 @@ interface ProductRow {
 
 function CatalogContent() {
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedProduct, setSelectedProduct] = useState<CardProps | null>(null);
 
   const searchParams = useSearchParams();
@@ -82,13 +83,14 @@ function CatalogContent() {
 
   return (
     <>
-      <Header />
+      <Header searchQuery={searchQuery} onSearchChange={setSearchQuery} />
       <FilterCategory
         selectedCategory={selectedCategory}
         onSelectCategory={setSelectedCategory}
       />
       <CardList
         selectedCategory={selectedCategory}
+        searchQuery={searchQuery}
         onCardClick={handleCardClick}
       />
 

@@ -18,7 +18,6 @@ const DEFAULT_ROUTE_MAP: Record<string, string> = {
   "Главная страница": "/",
   "Личный кабинет": "/profile",
   "Избранное": "/favorite",
-  "История покупок": "/history",
 };
 
 export const Menu = ({

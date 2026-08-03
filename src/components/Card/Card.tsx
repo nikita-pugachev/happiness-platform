@@ -3,6 +3,8 @@ import styles from "./Card.module.scss";
 import Image from "next/image";
 import Like from "@/assets/images/icons/heart.svg";
 import LikeActive from "@/assets/images/icons/heart-is-like.svg";
+import MinusIcon from "@/assets/images/icons/minus.svg";
+import PlusIcon from "@/assets/images/icons/plus.svg";
 import { FC, MouseEvent, useState, useEffect } from "react";
 import { Button } from "@/components/ui/Button/Button";
 import { useCart } from "@/hooks/useCart";
@@ -181,7 +183,7 @@ export const Card: FC<CardProps> = ({
               onClick={handleDecrement}
               aria-label="Уменьшить количество"
             >
-              -
+              <Image src={MinusIcon} alt="минус" width={12} height={12} />
             </button>
             <span className={styles.counter_value}>{quantity}</span>
             <button
@@ -190,7 +192,7 @@ export const Card: FC<CardProps> = ({
               onClick={handleIncrement}
               aria-label="Увеличить количество"
             >
-              +
+              <Image src={PlusIcon} alt="плюс" width={12} height={12} />
             </button>
           </div>
         )}
