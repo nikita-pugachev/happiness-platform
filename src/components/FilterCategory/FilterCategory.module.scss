@@ -10,6 +10,7 @@
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  scroll-snap-type: x mandatory;
 
   &::-webkit-scrollbar {
     display: none;
@@ -18,7 +19,8 @@
 
 .category_list {
   display: flex;
-  gap: 8px;
+  flex-wrap: nowrap;
+  gap: var(--category-gap);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -26,9 +28,10 @@
 }
 
 .category_item {
-  flex: 0 0 calc((100% - 24px) / 4);
-  width: calc((100% - 24px) / 4);
-  max-width: calc((100% - 24px) / 4);
+  flex: 0 0 calc((100vw - 32px - (3 * var(--category-gap))) / 4);
+  width: calc((100vw - 32px - (3 * var(--category-gap))) / 4);
+  max-width: calc((100vw - 32px - (3 * var(--category-gap))) / 4);
+  scroll-snap-align: start;
 
   > button {
     width: 100%;

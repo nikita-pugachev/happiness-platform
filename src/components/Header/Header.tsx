@@ -35,7 +35,7 @@ export const Header = () => {
         <div className={styles.nav}>
           <Menu
             showLogout
-            items={["Личный кабинет", "Избранное", "История покупок"]}
+            items={["Личный кабинет", "Избранное"]}
           />
 
           <IconButton

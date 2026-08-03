@@ -101,7 +101,7 @@ export default function Page() {
       <header className={styles.header_favorite}>
         <Menu
           showLogout
-          items={["Главная страница", "Личный кабинет", "История покупок"]}
+          items={["Главная страница", "Личный кабинет"]}
         />
         <h1 className={styles.title}>Избранное</h1>
       </header>
