@@ -3,6 +3,14 @@
 ## О проекте
 Интернет-магазин счастья - это мобильное (пока что) веб-приложение, где пользователь за улыбки может приобрести что-то, что делает его счастливым. Это не материальные вещи, не деньги, это то, что греет душу. Приложение нацелено на помощь людям в тяжелый период. Все должны улыбаться и быть счастливы.
 
+## 👀 Взгяд на проект
+<div align="center">
+<img src="./src/assets/images/view1.jpg" width=500 height=500>
+<img src="./src/assets/images/view2.jpg" width=500 height=500>
+<img src="./src/assets/images/view3.jpg" width=500 height=500>
+<img src="./src/assets/images/view4.jpg" width=500 height=500>
+</div>
+
 ## 💻 Используемые технологии
 * Next.js
 * Supabase 
