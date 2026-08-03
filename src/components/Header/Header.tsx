@@ -46,7 +46,13 @@ export const Header = ({ searchQuery, onSearchChange }: HeaderProps) => {
           <IconButton
             src={CartIcon}
             alt="Корзина"
-            stateInfo={totalCount > 0 ? String(totalCount) : undefined}
+            stateInfo={
+              totalCount > 0
+                ? totalCount > 99
+                  ? "99+"
+                  : String(totalCount)
+                : undefined
+            }
             onClick={openCart}
           />
         </div>
