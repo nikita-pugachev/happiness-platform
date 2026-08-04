@@ -34,7 +34,7 @@ export default function Page() {
     });
 
     if (signInError) {
-      setError(signInError.message);
+      setError("Данные некоррекнты, проверьте и попробуйте снова");
       setLoading(false);
       return;
     }

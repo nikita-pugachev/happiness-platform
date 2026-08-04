@@ -77,9 +77,7 @@ export default function Page() {
       await refreshUser();
       setSuccess("Аватарка успешно обновлена!");
     } catch (err) {
-      const message =
-        err instanceof Error ? err.message : "Ошибка при загрузке аватарки";
-      setError(message);
+      setError("Ошибка при загрузке аватарки");
     } finally {
       setLoading(false);
     }
@@ -118,7 +116,7 @@ export default function Page() {
       const { error: updateError } = await supabase.auth.updateUser(updateData);
 
       if (updateError) {
-        setError(updateError.message);
+        setError("Данные некоррекнты, проверьте и попробуйте снова");
         setLoading(false);
         return;
       }
@@ -134,9 +132,7 @@ export default function Page() {
       setNewPassword("");
       setShowPasswordInput(false);
     } catch (err) {
-      const message =
-        err instanceof Error ? err.message : "Ошибка при сохранении данных";
-      setError(message);
+      setError("Ошибка при сохранении данных, попробуйте снова");
     } finally {
       setLoading(false);
     }
