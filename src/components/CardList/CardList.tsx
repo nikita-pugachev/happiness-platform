@@ -42,7 +42,7 @@ export const CardList: FC<CardListProps> = ({
 
         if (fetchError || !data) {
           setError(
-            "Ошибка загрузки данных, пожалуйста, перезагрузите страницу."
+            "Ошибка загрузки данных, пожалуйста, перезагрузите страницу.",
           );
           setProducts([]);
         } else {
@@ -50,7 +50,7 @@ export const CardList: FC<CardListProps> = ({
           const filtered =
             selectedCategory && selectedCategory !== "all"
               ? rows.filter(
-                  (item) => item.categories?.slug === selectedCategory
+                  (item) => item.categories?.slug === selectedCategory,
                 )
               : rows;
 
@@ -67,7 +67,7 @@ export const CardList: FC<CardListProps> = ({
       } catch (err) {
         if (isMounted) {
           setError(
-            "Ошибка загрузки данных, пожалуйста, перезагрузите страницу."
+            "Ошибка загрузки данных, пожалуйста, перезагрузите страницу.",
           );
           setProducts([]);
         }
@@ -84,7 +84,7 @@ export const CardList: FC<CardListProps> = ({
   const queryClean = searchQuery.trim().toLowerCase();
   const displayedProducts = queryClean
     ? products.filter((product) =>
-        product.title.toLowerCase().includes(queryClean)
+        product.title.toLowerCase().includes(queryClean),
       )
     : products;
 

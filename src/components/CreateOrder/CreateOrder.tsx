@@ -40,7 +40,7 @@ export const CreateOrder = ({ onSuccess }: CreateOrderProps) => {
 
     try {
       const supabase = createClient();
-      
+
       const orderPayload: {
         status: string;
         total_price: number;

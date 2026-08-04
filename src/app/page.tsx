@@ -21,7 +21,9 @@ interface ProductRow {
 function CatalogContent() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedProduct, setSelectedProduct] = useState<CardProps | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<CardProps | null>(
+    null,
+  );
 
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -73,7 +75,7 @@ function CatalogContent() {
       const newUrl = `${pathname}?cardId=${targetId}`;
       window.history.pushState(null, "", newUrl);
     },
-    [pathname]
+    [pathname],
   );
 
   const handleCloseModal = useCallback(() => {

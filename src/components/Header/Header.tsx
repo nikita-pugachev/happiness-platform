@@ -38,10 +38,7 @@ export const Header = ({ searchQuery, onSearchChange }: HeaderProps) => {
     <>
       <header className={styles.header}>
         <div className={styles.nav}>
-          <Menu
-            showLogout
-            items={["Личный кабинет", "Избранное"]}
-          />
+          <Menu showLogout items={["Личный кабинет", "Избранное"]} />
 
           <IconButton
             src={CartIcon}
@@ -76,9 +73,7 @@ export const Header = ({ searchQuery, onSearchChange }: HeaderProps) => {
             onBack={() => setCartStep("basket")}
           />
         )}
-        {cartStep === "success" && (
-          <SuccessOrder onClose={closeCart} />
-        )}
+        {cartStep === "success" && <SuccessOrder onClose={closeCart} />}
       </Modal>
     </>
   );

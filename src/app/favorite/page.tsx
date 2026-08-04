@@ -91,7 +91,7 @@ export default function Page() {
   const handleFavoriteToggle = (isLiked: boolean, productId: string) => {
     if (!isLiked) {
       setFavoriteProducts((prev) =>
-        prev.filter((item) => (item.id || item.title) !== productId)
+        prev.filter((item) => (item.id || item.title) !== productId),
       );
     }
   };
@@ -99,10 +99,7 @@ export default function Page() {
   return (
     <div className={styles.container}>
       <header className={styles.header_favorite}>
-        <Menu
-          showLogout
-          items={["Главная страница", "Личный кабинет"]}
-        />
+        <Menu showLogout items={["Главная страница", "Личный кабинет"]} />
         <h1 className={styles.title}>Избранное</h1>
       </header>
 

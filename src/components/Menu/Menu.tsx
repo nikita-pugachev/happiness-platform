@@ -17,7 +17,7 @@ export interface MenuProps {
 const DEFAULT_ROUTE_MAP: Record<string, string> = {
   "Главная страница": "/",
   "Личный кабинет": "/profile",
-  "Избранное": "/favorite",
+  Избранное: "/favorite",
 };
 
 export const Menu = ({
