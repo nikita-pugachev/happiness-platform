@@ -18,6 +18,20 @@
 * TypeScript
 * SASS
 
+## ▶️ Установка и запуск 
+**1. Клонирование репозитория**
+```bash
+git clone git@github.com:nikita-pugachev/happiness-platform.git
+```
+**2. Запуск**
+* Открыть проект в VS code или другом IDE.
+* Установить зависимости 'npm install'
+* Запустить проект с помощью комадны для терминала 'npm run dev'
+
+## 📝 Сcылка на запуск
+Помните, что приложение пока  что нацелено только для мобильных устройств. Оно не адаптированно под ПК.
+[Веб-приложение "happiness-platform"](https://happiness-platform.vercel.app/)
+
 ## ✉️ Контакты автора
 [![Telegram](https://img.shields.io/badge/-Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/RUSSS1NG)
 [![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:RUSSSSing@yandex.ru)
