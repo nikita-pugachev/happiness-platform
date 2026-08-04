@@ -30,7 +30,7 @@ git clone git@github.com:nikita-pugachev/happiness-platform.git
 
 ## 📝 Сcылка на запуск
 Помните, что приложение пока  что нацелено только на мобильные устройства. Оно не адаптированно под ПК.
-[Веб-приложение "happiness-platform"](https://happiness-platform.vercel.app/)
+[Интернет-магазин счастья ❤️](https://happiness-platform.vercel.app/)
 
 ## ✉️ Контакты автора
 [![Telegram](https://img.shields.io/badge/-Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/RUSSS1NG)
