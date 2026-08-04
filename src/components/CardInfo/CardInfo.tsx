@@ -132,19 +132,20 @@ export const CardInfo: FC<CardInfoProps> = ({ product, onClose }) => {
 
   return (
     <div className={styles.card_info_container}>
+      <button
+        type="button"
+        onClick={handleAddFavorite}
+        className={styles.favorite_button}
+        aria-label="Добавить в избранное"
+      >
+        <Image
+          src={!isLike ? Like : LikeActive}
+          alt="Избранное"
+          className={styles.favorite_icon}
+        />
+      </button>
+
       <div className={styles.image_wrapper}>
-        <button
-          type="button"
-          onClick={handleAddFavorite}
-          className={styles.favorite_button}
-          aria-label="Добавить в избранное"
-        >
-          <Image
-            src={!isLike ? Like : LikeActive}
-            alt="Избранное"
-            className={styles.favorite_icon}
-          />
-        </button>
         <Image
           src={product.imageSrc}
           alt={product.title}
@@ -161,7 +162,6 @@ export const CardInfo: FC<CardInfoProps> = ({ product, onClose }) => {
 
       {product.description && (
         <div className={styles.description_box}>
-          <h4 className={styles.description_title}>Описание</h4>
           <p className={styles.description_text}>{product.description}</p>
         </div>
       )}

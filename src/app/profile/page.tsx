@@ -124,7 +124,13 @@ export default function Page() {
       }
 
       await refreshUser();
-      setSuccess("Изменения успешно сохранены!");
+      if (email !== (user?.email || "")) {
+        setSuccess(
+          "Письмо с подтверждением отправлено на вашу новую почту. Пожалуйста, перейдите по ссылке в письме."
+        );
+      } else {
+        setSuccess("Изменения успешно сохранены!");
+      }
       setNewPassword("");
       setShowPasswordInput(false);
     } catch (err) {
