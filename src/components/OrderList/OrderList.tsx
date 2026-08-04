@@ -29,15 +29,15 @@ export const OrderList = ({ items, onRemoveItem }: OrderListProps) => {
   };
 
   if (displayItems.length === 0) {
-    return <div className={styles.empty}>Корзина пуста</div>;
+    return <span className={styles.empty}>Корзина пуста</span>;
   }
 
   return (
     <div className={styles.order_list}>
       {displayItems.map((item) => (
         <div key={item.id} className={styles.item}>
-          <span className={styles.item_title}>{item.title}</span>
-          <div className={styles.right_content}>
+          <h3 className={styles.item_title}>{item.title}</h3>
+          <div className={styles.content_info}>
             <span className={styles.item_quantity}>{item.quantity} шт.</span>
             <button
               type="button"
