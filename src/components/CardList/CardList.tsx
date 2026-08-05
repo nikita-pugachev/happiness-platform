@@ -3,6 +3,7 @@ import styles from "./CardList.module.scss";
 import { FC, useEffect, useState } from "react";
 import { Card, CardProps } from "@/components/Card/Card";
 import { createClient } from "@/utils/supabase/client";
+import { Spinner } from "@/components/ui/Spinner/Spinner";
 
 export interface CardListProps {
   onCardClick?: (product: CardProps) => void;
@@ -26,6 +27,7 @@ export const CardList: FC<CardListProps> = ({
 }) => {
   const [products, setProducts] = useState<CardProps[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     let isMounted = true;
@@ -33,6 +35,7 @@ export const CardList: FC<CardListProps> = ({
 
     const fetchProducts = async () => {
       setError(null);
+      setLoading(true);
       try {
         const { data, error: fetchError } = await supabase
           .from("products")
@@ -42,7 +45,7 @@ export const CardList: FC<CardListProps> = ({
 
         if (fetchError || !data) {
           setError(
-            "Ошибка загрузки данных, пожалуйста, перезагрузите страницу.",
+            "Ошибка загрузки данных, пожалуйста, перезагрузите страницу."
           );
           setProducts([]);
         } else {
@@ -50,7 +53,7 @@ export const CardList: FC<CardListProps> = ({
           const filtered =
             selectedCategory && selectedCategory !== "all"
               ? rows.filter(
-                  (item) => item.categories?.slug === selectedCategory,
+                  (item) => item.categories?.slug === selectedCategory
                 )
               : rows;
 
@@ -67,9 +70,13 @@ export const CardList: FC<CardListProps> = ({
       } catch (err) {
         if (isMounted) {
           setError(
-            "Ошибка загрузки данных, пожалуйста, перезагрузите страницу.",
+            "Ошибка загрузки данных, пожалуйста, перезагрузите страницу."
           );
           setProducts([]);
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false);
         }
       }
     };
@@ -84,7 +91,7 @@ export const CardList: FC<CardListProps> = ({
   const queryClean = searchQuery.trim().toLowerCase();
   const displayedProducts = queryClean
     ? products.filter((product) =>
-        product.title.toLowerCase().includes(queryClean),
+        product.title.toLowerCase().includes(queryClean)
       )
     : products;
 
@@ -92,6 +99,14 @@ export const CardList: FC<CardListProps> = ({
     return (
       <section className={styles.card_list_container}>
         <span className={styles.error_message}>{error}</span>
+      </section>
+    );
+  }
+
+  if (loading) {
+    return (
+      <section className={styles.card_list_container}>
+        <Spinner />
       </section>
     );
   }
