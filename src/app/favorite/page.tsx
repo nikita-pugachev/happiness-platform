@@ -3,9 +3,10 @@
 import styles from "./favorite.module.scss";
 import { Menu } from "@/components/Menu/Menu";
 import { Card, CardProps } from "@/components/Card/Card";
+import { Spinner } from "@/components/ui/Spinner/Spinner";
 import { useAuth } from "@/hooks/useAuth";
 import { createClient } from "@/utils/supabase/client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 interface ProductRow {
   id: string;
@@ -14,6 +15,8 @@ interface ProductRow {
   image_url: string;
   description?: string;
 }
+
+const MENU_ITEMS = ["Главная страница", "Личный кабинет"];
 
 export default function Page() {
   const { user, loading: authLoading } = useAuth();
@@ -88,24 +91,27 @@ export default function Page() {
     };
   }, [user, authLoading]);
 
-  const handleFavoriteToggle = (isLiked: boolean, productId: string) => {
-    if (!isLiked) {
-      setFavoriteProducts((prev) =>
-        prev.filter((item) => (item.id || item.title) !== productId),
-      );
-    }
-  };
+  const handleFavoriteToggle = useCallback(
+    (isLiked: boolean, productId: string) => {
+      if (!isLiked) {
+        setFavoriteProducts((prev) =>
+          prev.filter((item) => (item.id || item.title) !== productId),
+        );
+      }
+    },
+    [],
+  );
 
   return (
     <div className={styles.container}>
       <header className={styles.header_favorite}>
-        <Menu showLogout items={["Главная страница", "Личный кабинет"]} />
+        <Menu showLogout items={MENU_ITEMS} />
         <h1 className={styles.title}>Избранное</h1>
       </header>
 
       <main className={styles.content}>
         {loading || authLoading ? (
-          <div className={styles.loading}>Загрузка...</div>
+          <Spinner />
         ) : favoriteProducts.length === 0 ? (
           <div className={styles.empty_container}>
             <span className={styles.empty_message}>

@@ -4,6 +4,8 @@ import {
   useContext,
   useState,
   useEffect,
+  useCallback,
+  useMemo,
   ReactNode,
 } from "react";
 
@@ -56,77 +58,90 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [cartItems, isMounted]);
 
-  const updateQuantity = (
-    product: Omit<CartItem, "quantity">,
-    newQuantity: number,
-  ) => {
-    setCartItems((prevItems) => {
-      const existingIndex = prevItems.findIndex(
-        (item) => item.id === product.id,
-      );
+  const updateQuantity = useCallback(
+    (product: Omit<CartItem, "quantity">, newQuantity: number) => {
+      setCartItems((prevItems) => {
+        const existingIndex = prevItems.findIndex(
+          (item) => item.id === product.id,
+        );
 
-      if (newQuantity <= 0) {
-        return prevItems.filter((item) => item.id !== product.id);
-      }
+        if (newQuantity <= 0) {
+          return prevItems.filter((item) => item.id !== product.id);
+        }
 
-      if (existingIndex > -1) {
-        const updated = [...prevItems];
-        updated[existingIndex] = {
-          ...updated[existingIndex],
-          quantity: newQuantity,
-        };
-        return updated;
-      } else {
-        return [
-          ...prevItems,
-          {
-            id: product.id,
-            title: product.title,
-            price: product.price,
-            imageSrc: product.imageSrc,
+        if (existingIndex > -1) {
+          const updated = [...prevItems];
+          updated[existingIndex] = {
+            ...updated[existingIndex],
             quantity: newQuantity,
-          },
-        ];
-      }
-    });
-  };
+          };
+          return updated;
+        } else {
+          return [
+            ...prevItems,
+            {
+              id: product.id,
+              title: product.title,
+              price: product.price,
+              imageSrc: product.imageSrc,
+              quantity: newQuantity,
+            },
+          ];
+        }
+      });
+    },
+    [],
+  );
 
-  const getItemQuantity = (id: string): number => {
-    const item = cartItems.find((i) => i.id === id);
-    return item ? item.quantity : 0;
-  };
+  const getItemQuantity = useCallback(
+    (id: string): number => {
+      const item = cartItems.find((i) => i.id === id);
+      return item ? item.quantity : 0;
+    },
+    [cartItems],
+  );
 
-  const clearCart = () => {
+  const clearCart = useCallback(() => {
     setCartItems([]);
-  };
+  }, []);
 
-  const totalCount = isMounted
-    ? cartItems.reduce((sum, item) => sum + item.quantity, 0)
-    : 0;
+  const totalCount = useMemo(() => {
+    if (!isMounted) return 0;
+    return cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  }, [cartItems, isMounted]);
 
-  const totalPrice = isMounted
-    ? cartItems.reduce((sum, item) => {
-        const numPrice =
-          typeof item.price === "number"
-            ? item.price
-            : parseFloat(item.price) || 0;
-        return sum + numPrice * item.quantity;
-      }, 0)
-    : 0;
+  const totalPrice = useMemo(() => {
+    if (!isMounted) return 0;
+    return cartItems.reduce((sum, item) => {
+      const numPrice =
+        typeof item.price === "number"
+          ? item.price
+          : parseFloat(item.price) || 0;
+      return sum + numPrice * item.quantity;
+    }, 0);
+  }, [cartItems, isMounted]);
+
+  const contextValue = useMemo(
+    () => ({
+      cartItems,
+      totalCount,
+      totalPrice,
+      updateQuantity,
+      getItemQuantity,
+      clearCart,
+    }),
+    [
+      cartItems,
+      totalCount,
+      totalPrice,
+      updateQuantity,
+      getItemQuantity,
+      clearCart,
+    ],
+  );
 
   return (
-    <CartContext.Provider
-      value={{
-        cartItems,
-        totalCount,
-        totalPrice,
-        updateQuantity,
-        getItemQuantity,
-        clearCart,
-      }}
-    >
-      {children}
-    </CartContext.Provider>
+    <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>
   );
 };
 

@@ -6,7 +6,7 @@ import { IconButton } from "@/components/ui/IconButton/IconButton";
 import { Search } from "@/components/ui/Search/Search";
 import { useCart } from "@/hooks/useCart";
 import { Menu } from "@/components/Menu/Menu";
-import { useState } from "react";
+import { useState, useCallback, useMemo, memo } from "react";
 import { Modal } from "@/components/Modal/Modal";
 import { Basket } from "@/components/Basket/Basket";
 import { CreateOrder } from "@/components/CreateOrder/CreateOrder";
@@ -19,37 +19,50 @@ interface HeaderProps {
   onSearchChange?: (query: string) => void;
 }
 
-export const Header = ({ searchQuery, onSearchChange }: HeaderProps) => {
+const MENU_ITEMS = ["Личный кабинет", "Избранное"];
+
+export const Header = memo(({ searchQuery, onSearchChange }: HeaderProps) => {
   const { totalCount } = useCart();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [cartStep, setCartStep] = useState<CartStep>("basket");
 
-  const openCart = () => {
+  const openCart = useCallback(() => {
     setCartStep("basket");
     setIsCartOpen(true);
-  };
+  }, []);
 
-  const closeCart = () => {
+  const closeCart = useCallback(() => {
     setIsCartOpen(false);
     setCartStep("basket");
-  };
+  }, []);
+
+  const handleCheckout = useCallback(() => {
+    setCartStep("create_order");
+  }, []);
+
+  const handleCreateOrderSuccess = useCallback(() => {
+    setCartStep("success");
+  }, []);
+
+  const handleCreateOrderBack = useCallback(() => {
+    setCartStep("basket");
+  }, []);
+
+  const cartBadgeText = useMemo(() => {
+    if (totalCount <= 0) return undefined;
+    return totalCount > 99 ? "99+" : String(totalCount);
+  }, [totalCount]);
 
   return (
     <>
       <header className={styles.header}>
         <div className={styles.nav}>
-          <Menu showLogout items={["Личный кабинет", "Избранное"]} />
+          <Menu showLogout items={MENU_ITEMS} />
 
           <IconButton
             src={CartIcon}
             alt="Корзина"
-            stateInfo={
-              totalCount > 0
-                ? totalCount > 99
-                  ? "99+"
-                  : String(totalCount)
-                : undefined
-            }
+            stateInfo={cartBadgeText}
             onClick={openCart}
           />
         </div>
@@ -62,19 +75,18 @@ export const Header = ({ searchQuery, onSearchChange }: HeaderProps) => {
 
       <Modal isOpen={isCartOpen} onClose={closeCart}>
         {cartStep === "basket" && (
-          <Basket
-            onClose={closeCart}
-            onCheckout={() => setCartStep("create_order")}
-          />
+          <Basket onClose={closeCart} onCheckout={handleCheckout} />
         )}
         {cartStep === "create_order" && (
           <CreateOrder
-            onSuccess={() => setCartStep("success")}
-            onBack={() => setCartStep("basket")}
+            onSuccess={handleCreateOrderSuccess}
+            onBack={handleCreateOrderBack}
           />
         )}
         {cartStep === "success" && <SuccessOrder onClose={closeCart} />}
       </Modal>
     </>
   );
-};
+});
+
+Header.displayName = "Header";

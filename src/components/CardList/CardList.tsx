@@ -1,6 +1,6 @@
 "use client";
 import styles from "./CardList.module.scss";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState, useMemo, memo } from "react";
 import { Card, CardProps } from "@/components/Card/Card";
 import { createClient } from "@/utils/supabase/client";
 import { Spinner } from "@/components/ui/Spinner/Spinner";
@@ -20,7 +20,7 @@ interface ProductRow {
   categories?: { slug: string } | null;
 }
 
-export const CardList: FC<CardListProps> = ({
+export const CardList: FC<CardListProps> = memo(({
   onCardClick,
   selectedCategory = "all",
   searchQuery = "",
@@ -88,12 +88,13 @@ export const CardList: FC<CardListProps> = ({
     };
   }, [selectedCategory]);
 
-  const queryClean = searchQuery.trim().toLowerCase();
-  const displayedProducts = queryClean
-    ? products.filter((product) =>
-        product.title.toLowerCase().includes(queryClean)
-      )
-    : products;
+  const displayedProducts = useMemo(() => {
+    const queryClean = searchQuery.trim().toLowerCase();
+    if (!queryClean) return products;
+    return products.filter((product) =>
+      product.title.toLowerCase().includes(queryClean)
+    );
+  }, [products, searchQuery]);
 
   if (error) {
     return (
@@ -135,4 +136,6 @@ export const CardList: FC<CardListProps> = ({
       )}
     </section>
   );
-};
+});
+
+CardList.displayName = "CardList";

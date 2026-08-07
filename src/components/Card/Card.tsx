@@ -5,7 +5,7 @@ import Like from "@/assets/images/icons/heart.svg";
 import LikeActive from "@/assets/images/icons/heart-is-like.svg";
 import MinusIcon from "@/assets/images/icons/minus.svg";
 import PlusIcon from "@/assets/images/icons/plus.svg";
-import { FC, MouseEvent, useState, useEffect } from "react";
+import { FC, MouseEvent, useState, useEffect, memo } from "react";
 import { Button } from "@/components/ui/Button/Button";
 import { useCart } from "@/hooks/useCart";
 import { useAuth } from "@/hooks/useAuth";
@@ -23,7 +23,7 @@ export interface CardProps {
   onFavoriteToggle?: (isLiked: boolean, id: string) => void;
 }
 
-export const Card: FC<CardProps> = ({
+export const Card: FC<CardProps> = memo(({
   id,
   title,
   price,
@@ -40,7 +40,9 @@ export const Card: FC<CardProps> = ({
   const [isLike, setLike] = useState<boolean>(false);
 
   useEffect(() => {
+    let isMounted = true;
     const targetId = id || productId;
+
     if (!user || !targetId) {
       setLike(false);
       return;
@@ -49,17 +51,27 @@ export const Card: FC<CardProps> = ({
     const supabase = createClient();
 
     const checkFavorite = async () => {
-      const { data } = await supabase
-        .from("favorites")
-        .select("user_id, product_id")
-        .eq("user_id", user.id)
-        .eq("product_id", targetId)
-        .maybeSingle();
+      try {
+        const { data } = await supabase
+          .from("favorites")
+          .select("user_id, product_id")
+          .eq("user_id", user.id)
+          .eq("product_id", targetId)
+          .maybeSingle();
 
-      setLike(!!data);
+        if (isMounted) {
+          setLike(!!data);
+        }
+      } catch (err) {
+        console.error("Ошибка при проверке избранного:", err);
+      }
     };
 
     checkFavorite();
+
+    return () => {
+      isMounted = false;
+    };
   }, [user, id, productId]);
 
   const handleAddFavorite = async (e: MouseEvent) => {
@@ -199,4 +211,6 @@ export const Card: FC<CardProps> = ({
       </div>
     </div>
   );
-};
+});
+
+Card.displayName = "Card";

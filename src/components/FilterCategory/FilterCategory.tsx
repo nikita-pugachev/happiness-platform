@@ -1,6 +1,6 @@
 "use client";
 import styles from "./FilterCategory.module.scss";
-import { FC, useState } from "react";
+import { FC, useState, useCallback, memo } from "react";
 import { IconButton } from "@/components/ui/IconButton/IconButton";
 import AllCategoryIcon from "@/assets/images/icons/all-category.svg";
 import HugsIcon from "@/assets/images/icons/hugs.svg";
@@ -23,7 +23,7 @@ const CATEGORIES = [
   { id: "mood", name: "Настроение", slug: "mood", icon: MoodIcon },
 ];
 
-export const FilterCategory: FC<FilterCategoryProps> = ({
+export const FilterCategory: FC<FilterCategoryProps> = memo(({
   selectedCategory,
   onSelectCategory,
 }) => {
@@ -32,12 +32,15 @@ export const FilterCategory: FC<FilterCategoryProps> = ({
   const currentCategory =
     selectedCategory !== undefined ? selectedCategory : internalCategory;
 
-  const handleCategoryClick = (slug: string) => {
-    if (selectedCategory === undefined) {
-      setInternalCategory(slug);
-    }
-    onSelectCategory?.(slug);
-  };
+  const handleCategoryClick = useCallback(
+    (slug: string) => {
+      if (selectedCategory === undefined) {
+        setInternalCategory(slug);
+      }
+      onSelectCategory?.(slug);
+    },
+    [selectedCategory, onSelectCategory],
+  );
 
   return (
     <div className={styles.filter_container}>
@@ -61,4 +64,6 @@ export const FilterCategory: FC<FilterCategoryProps> = ({
       </div>
     </div>
   );
-};
+});
+
+FilterCategory.displayName = "FilterCategory";

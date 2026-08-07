@@ -6,7 +6,7 @@ import CloseIcon from "@/assets/images/icons/close.svg";
 import { Button } from "@/components/ui/Button/Button";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
-import { useState } from "react";
+import { useState, useCallback, memo } from "react";
 
 export interface MenuProps {
   isOpen?: boolean;
@@ -20,7 +20,7 @@ const DEFAULT_ROUTE_MAP: Record<string, string> = {
   Избранное: "/favorite",
 };
 
-export const Menu = ({
+export const Menu = memo(({
   isOpen = false,
   items = [],
   showLogout = false,
@@ -29,24 +29,27 @@ export const Menu = ({
   const router = useRouter();
   const { user, signOut } = useAuth();
 
-  const toggleMenu = () => {
+  const toggleMenu = useCallback(() => {
     setOpen((prev) => !prev);
-  };
+  }, []);
 
-  const closeMenu = () => {
+  const closeMenu = useCallback(() => {
     setOpen(false);
-  };
+  }, []);
 
-  const handleNavigate = (path: string) => {
-    closeMenu();
-    router.push(path);
-  };
+  const handleNavigate = useCallback(
+    (path: string) => {
+      closeMenu();
+      router.push(path);
+    },
+    [closeMenu, router],
+  );
 
-  const handleSignOut = async () => {
+  const handleSignOut = useCallback(async () => {
     await signOut();
     closeMenu();
     router.push("/");
-  };
+  }, [signOut, closeMenu, router]);
 
   return (
     <div className={styles.menu_wrapper}>
@@ -117,4 +120,6 @@ export const Menu = ({
       </div>
     </div>
   );
-};
+});
+
+Menu.displayName = "Menu";
