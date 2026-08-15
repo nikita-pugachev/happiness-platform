@@ -1,7 +1,12 @@
 "use client";
 
 import styles from "./Header.module.scss";
+import Image from "next/image";
 import CartIcon from "@/assets/images/icons/cart.svg";
+import FavoriteIcon from "@/assets/images/icons/heart.svg";
+import UserIcon from "@/assets/images/icons/user.svg";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/useAuth";
 import { IconButton } from "@/components/ui/IconButton/IconButton";
 import { Search } from "@/components/ui/Search/Search";
 import { useCart } from "@/hooks/useCart";
@@ -22,6 +27,8 @@ interface HeaderProps {
 const MENU_ITEMS = ["Личный кабинет", "Избранное"];
 
 export const Header = memo(({ searchQuery, onSearchChange }: HeaderProps) => {
+  const router = useRouter();
+  const { user } = useAuth();
   const { totalCount } = useCart();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [cartStep, setCartStep] = useState<CartStep>("basket");
@@ -53,6 +60,18 @@ export const Header = memo(({ searchQuery, onSearchChange }: HeaderProps) => {
     return totalCount > 99 ? "99+" : String(totalCount);
   }, [totalCount]);
 
+  const handleFavorite = () => {
+    router.push('/favorite');
+  }
+
+  const handleProfile = () => {
+    if(!user) {
+      router.push('/login');
+      return;
+    }
+    router.push('/profile');
+  }
+
   return (
     <>
       <header className={styles.header}>
@@ -66,11 +85,24 @@ export const Header = memo(({ searchQuery, onSearchChange }: HeaderProps) => {
             onClick={openCart}
           />
         </div>
-        <Search
-          value={searchQuery}
-          onChange={onSearchChange}
-          placeholder="Поиск..."
-        />
+        <div className={styles.search_container}>
+          <Search
+            value={searchQuery}
+            onChange={onSearchChange}
+            placeholder="Поиск..."
+          />
+        </div>
+        <div className={styles.desk_nav}>
+          <button className={styles.desk_nav_button} onClick={handleFavorite}>
+            <Image src={FavoriteIcon} alt="favorite" width={25} height={25} />
+          </button>
+          <button className={styles.desk_nav_button} onClick={openCart}>
+            <Image src={CartIcon} alt="favorite" width={25} height={25} />
+          </button>
+          <button className={styles.desk_nav_button} onClick={handleProfile}>
+            <Image src={UserIcon} alt="favorite" width={25} height={25} />
+          </button>
+        </div>
       </header>
 
       <Modal isOpen={isCartOpen} onClose={closeCart}>
