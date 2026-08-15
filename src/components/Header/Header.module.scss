@@ -12,3 +12,34 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.desk_nav {
+  display: none;
+}
+
+@media(width >= 768px) {
+  .header {
+    flex-direction: row;
+  }
+
+  .nav {
+    display: none;
+  }
+
+  .search_container {
+    width: 600px;
+  }
+
+  .desk_nav {
+    display: flex;
+    gap: 20px;
+  }
+
+  .desk_nav_button {
+    border: none;
+    background: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
