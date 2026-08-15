@@ -61,16 +61,20 @@ export const Header = memo(({ searchQuery, onSearchChange }: HeaderProps) => {
   }, [totalCount]);
 
   const handleFavorite = () => {
-    router.push('/favorite');
-  }
-
-  const handleProfile = () => {
-    if(!user) {
-      router.push('/login');
+    if (!user) {
+      router.push("/login");
       return;
     }
-    router.push('/profile');
-  }
+    router.push("/favorite");
+  };
+
+  const handleProfile = () => {
+    if (!user) {
+      router.push("/login");
+      return;
+    }
+    router.push("/profile");
+  };
 
   return (
     <>
