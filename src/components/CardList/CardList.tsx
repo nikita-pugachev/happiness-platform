@@ -7,7 +7,7 @@ import { Spinner } from "@/components/ui/Spinner/Spinner";
 
 export interface CardListProps {
   onCardClick?: (product: CardProps) => void;
-  selectedCategory?: string;
+  selectedCategory?: string | string[];
   searchQuery?: string;
 }
 
@@ -28,6 +28,10 @@ export const CardList: FC<CardListProps> = memo(({
   const [products, setProducts] = useState<CardProps[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+
+  const categoryDependencyKey = useMemo(() => {
+    return Array.isArray(selectedCategory) ? selectedCategory.sort().join(",") : selectedCategory;
+  }, [selectedCategory]);
 
   useEffect(() => {
     let isMounted = true;
@@ -50,12 +54,17 @@ export const CardList: FC<CardListProps> = memo(({
           setProducts([]);
         } else {
           const rows = data as unknown as ProductRow[];
-          const filtered =
-            selectedCategory && selectedCategory !== "all"
-              ? rows.filter(
-                  (item) => item.categories?.slug === selectedCategory
-                )
-              : rows;
+          
+          const isCategoryMatch = (slug?: string) => {
+            if (Array.isArray(selectedCategory)) {
+              if (selectedCategory.includes("all") || selectedCategory.length === 0) return true;
+              return slug ? selectedCategory.includes(slug) : false;
+            }
+            if (!selectedCategory || selectedCategory === "all") return true;
+            return slug === selectedCategory;
+          };
+
+          const filtered = rows.filter((item) => isCategoryMatch(item.categories?.slug));
 
           const mappedProducts: CardProps[] = filtered.map((item) => ({
             id: item.id,
@@ -86,7 +95,7 @@ export const CardList: FC<CardListProps> = memo(({
     return () => {
       isMounted = false;
     };
-  }, [selectedCategory]);
+  }, [categoryDependencyKey]);
 
   const displayedProducts = useMemo(() => {
     const queryClean = searchQuery.trim().toLowerCase();
