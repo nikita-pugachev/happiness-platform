@@ -1,0 +1,33 @@
+.filter_sidebar {
+  display: none;
+
+  @media (min-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-utility);
+    border-radius: 20px;
+    padding: 24px;
+    min-height: 100%;
+    align-self: stretch;
+  }
+}
+
+.filter_title {
+  font-family: var(--font);
+  font-size: 16px;
+  font-weight: var(--font-weight-title, 600);
+  color: var(--font-color);
+  margin-block-end: 16px;
+}
+
+.checkbox_group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.checkbox_item {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}

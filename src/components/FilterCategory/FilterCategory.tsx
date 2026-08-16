@@ -12,6 +12,7 @@ import MoodIcon from "@/assets/images/icons/mood.svg";
 interface FilterCategoryProps {
   selectedCategory?: string;
   onSelectCategory?: (slug: string) => void;
+  className?: string;
 }
 
 const CATEGORIES = [
@@ -23,47 +24,46 @@ const CATEGORIES = [
   { id: "mood", name: "Настроение", slug: "mood", icon: MoodIcon },
 ];
 
-export const FilterCategory: FC<FilterCategoryProps> = memo(({
-  selectedCategory,
-  onSelectCategory,
-}) => {
-  const [internalCategory, setInternalCategory] = useState("all");
+export const FilterCategory: FC<FilterCategoryProps> = memo(
+  ({ selectedCategory, onSelectCategory, className }) => {
+    const [internalCategory, setInternalCategory] = useState("all");
 
-  const currentCategory =
-    selectedCategory !== undefined ? selectedCategory : internalCategory;
+    const currentCategory =
+      selectedCategory !== undefined ? selectedCategory : internalCategory;
 
-  const handleCategoryClick = useCallback(
-    (slug: string) => {
-      if (selectedCategory === undefined) {
-        setInternalCategory(slug);
-      }
-      onSelectCategory?.(slug);
-    },
-    [selectedCategory, onSelectCategory],
-  );
+    const handleCategoryClick = useCallback(
+      (slug: string) => {
+        if (selectedCategory === undefined) {
+          setInternalCategory(slug);
+        }
+        onSelectCategory?.(slug);
+      },
+      [selectedCategory, onSelectCategory],
+    );
 
-  return (
-    <div className={styles.filter_container}>
-      <div className={styles.scroll_wrapper}>
-        <ul className={styles.category_list}>
-          {CATEGORIES.map((category) => {
-            const isActive = currentCategory === category.slug;
-            return (
-              <li key={category.id} className={styles.category_item}>
-                <IconButton
-                  src={category.icon}
-                  alt={category.name}
-                  label={category.name}
-                  isActive={isActive}
-                  onClick={() => handleCategoryClick(category.slug)}
-                />
-              </li>
-            );
-          })}
-        </ul>
+    return (
+      <div className={`${styles.filter_container} ${className}`}>
+        <div className={styles.scroll_wrapper}>
+          <ul className={styles.category_list}>
+            {CATEGORIES.map((category) => {
+              const isActive = currentCategory === category.slug;
+              return (
+                <li key={category.id} className={styles.category_item}>
+                  <IconButton
+                    src={category.icon}
+                    alt={category.name}
+                    label={category.name}
+                    isActive={isActive}
+                    onClick={() => handleCategoryClick(category.slug)}
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </div>
-    </div>
-  );
-});
+    );
+  },
+);
 
 FilterCategory.displayName = "FilterCategory";

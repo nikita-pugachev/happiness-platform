@@ -1,8 +1,9 @@
 "use client";
-
+import styles from "./App.module.scss";
 import { useState, useEffect, useCallback, Suspense } from "react";
 import { Header } from "@/components/Header/Header";
 import { FilterCategory } from "@/components/FilterCategory/FilterCategory";
+import { Filter } from "@/components/Filter/Filter";
 import { CardList } from "@/components/CardList/CardList";
 import { CardInfo } from "@/components/CardInfo/CardInfo";
 import { Modal } from "@/components/Modal/Modal";
@@ -19,11 +20,10 @@ interface ProductRow {
 }
 
 function CatalogContent() {
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(["all"]);
+  const [selectedMobileCategory, setSelectedMobileCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedProduct, setSelectedProduct] = useState<CardProps | null>(
-    null,
-  );
+  const [selectedProduct, setSelectedProduct] = useState<CardProps | null>(null);
 
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -83,18 +83,43 @@ function CatalogContent() {
     window.history.pushState(null, "", pathname);
   }, [pathname]);
 
+  const handleMobileCategorySelect = (category: string) => {
+    setSelectedMobileCategory(category);
+    setSelectedCategories([category]);
+  };
+
+  const handleDesktopCategoriesSelect = (categories: string[]) => {
+    setSelectedCategories(categories);
+    if (categories.length === 1) {
+      setSelectedMobileCategory(categories[0]);
+    } else if (categories.includes("all")) {
+      setSelectedMobileCategory("all");
+    }
+  };
+
   return (
     <>
       <Header searchQuery={searchQuery} onSearchChange={setSearchQuery} />
-      <FilterCategory
-        selectedCategory={selectedCategory}
-        onSelectCategory={setSelectedCategory}
-      />
-      <CardList
-        selectedCategory={selectedCategory}
-        searchQuery={searchQuery}
-        onCardClick={handleCardClick}
-      />
+      <main className={styles.main_content}>
+        <div className={styles.mobile_filter_section}>
+          <FilterCategory
+            selectedCategory={selectedMobileCategory}
+            onSelectCategory={handleMobileCategorySelect}
+          />
+        </div>
+        <Filter
+          selectedCategories={selectedCategories}
+          onSelectCategories={handleDesktopCategoriesSelect}
+          className={styles.desktop_sidebar}
+        />
+        <div className={styles.catalog_section}>
+          <CardList
+            selectedCategory={selectedCategories}
+            searchQuery={searchQuery}
+            onCardClick={handleCardClick}
+          />
+        </div>
+      </main>
 
       <Modal isOpen={!!selectedProduct} onClose={handleCloseModal}>
         {selectedProduct && (

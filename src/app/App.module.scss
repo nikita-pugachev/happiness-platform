@@ -2,9 +2,43 @@
   background-color: var(--background-color-main);
 }
 
-.title {
-  font-family: var(--font);
-  font-weight: var(--font-weight-title);
-  font-stretch: var(--font-width-main);
-  font-size: var(--font-size-title);
+.main_content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.mobile_filter_section {
+  width: 100%;
+  display: block;
+}
+
+.desktop_sidebar {
+  display: none;
+}
+
+.catalog_section {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .main_content {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 32px;
+    padding-block-end: 40px;
+    padding-inline: 32px;
+  }
+
+  .mobile_filter_section {
+    display: none;
+  }
+
+  .catalog_section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+  }
 }
