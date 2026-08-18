@@ -1,6 +1,8 @@
 .container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   min-height: 100vh;
   padding: 16px;
 }
@@ -60,4 +62,31 @@
   font-family: var(--font);
   font-size: var(--font-size-main);
   color: var(--font-color);
+}
+
+.desktop_nav {
+  display: none;
+}
+
+@media(width >= 768px) {
+  .desktop_nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+  }
+
+  .mobile_nav {
+    display: none;
+  }
+
+  .home_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
 }
