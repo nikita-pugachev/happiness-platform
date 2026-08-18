@@ -4,12 +4,13 @@ import Link from "next/link";
 import Image from "next/image";
 import Show from "@/assets/images/icons/show-eye.svg";
 import Hide from "@/assets/images/icons/hide-eye.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/Input/Input";
 import { Button } from "@/components/ui/Button/Button";
 import { IconButton } from "@/components/ui/IconButton/IconButton";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 import ArrowLeftIcon from "@/assets/images/icons/arrow-left.svg";
 
 export default function Page() {
@@ -22,6 +23,13 @@ export default function Page() {
 
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  const { user } = useAuth();
+
+  if (user) {
+    router.push("/");
+    return;
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
