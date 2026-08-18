@@ -10,6 +10,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { createClient } from "@/utils/supabase/client";
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { Modal } from "@/components/Modal/Modal";
 
 interface ProductRow {
   id: string;
