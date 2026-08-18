@@ -1,12 +1,15 @@
 "use client";
 
 import styles from "./favorite.module.scss";
+import HomeIcon from "@/assets/images/icons/home.svg";
+import Image from "next/image";
 import { Menu } from "@/components/Menu/Menu";
 import { Card, CardProps } from "@/components/Card/Card";
 import { Spinner } from "@/components/ui/Spinner/Spinner";
 import { useAuth } from "@/hooks/useAuth";
 import { createClient } from "@/utils/supabase/client";
 import { useEffect, useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
 
 interface ProductRow {
   id: string;
@@ -22,6 +25,7 @@ export default function Page() {
   const { user, loading: authLoading } = useAuth();
   const [favoriteProducts, setFavoriteProducts] = useState<CardProps[]>([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     let isMounted = true;
@@ -102,10 +106,21 @@ export default function Page() {
     [],
   );
 
+  const handleHome = () => {
+    router.push("/");
+  };
+
   return (
     <div className={styles.container}>
       <header className={styles.header_favorite}>
-        <Menu showLogout items={MENU_ITEMS} />
+        <div className={styles.mobile_nav}>
+          <Menu showLogout items={MENU_ITEMS} />
+        </div>
+        <div className={styles.desktop_nav}>
+          <button className={styles.home_button} onClick={handleHome}>
+            <Image src={HomeIcon} alt="Вернуться на главную" />
+          </button>
+        </div>
         <h1 className={styles.title}>Избранное</h1>
       </header>
 
