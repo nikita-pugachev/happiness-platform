@@ -1,9 +1,8 @@
 "use client";
 
 import styles from "./favorite.module.scss";
-import ArrowLeftIcon from "@/assets/images/icons/arrow-left.svg";
+import HomeIcon from "@/assets/images/icons/home.svg";
 import Image from "next/image";
-import Link from "next/link";
 import { Menu } from "@/components/Menu/Menu";
 import { Card, CardProps } from "@/components/Card/Card";
 import { CardInfo } from "@/components/CardInfo/CardInfo";
@@ -13,7 +12,6 @@ import { createClient } from "@/utils/supabase/client";
 import { useEffect, useState, useCallback, Suspense } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { Modal } from "@/components/Modal/Modal";
-import { IconButton } from "@/components/ui/IconButton/IconButton";
 
 interface ProductRow {
   id: string;
@@ -106,10 +104,7 @@ function FavoriteContent() {
   }, [user, authLoading]);
 
   useEffect(() => {
-    if (!cardIdFromUrl) {
-      setSelectedProduct(null);
-      return;
-    }
+    if (!cardIdFromUrl) return;
 
     let isMounted = true;
     const fetchProductById = async () => {
@@ -169,6 +164,12 @@ function FavoriteContent() {
     window.history.pushState(null, "", pathname);
   }, [pathname]);
 
+  const handleHome = () => {
+    router.push("/");
+  };
+
+  const activeProduct = cardIdFromUrl ? selectedProduct : null;
+
   return (
     <div className={styles.container}>
       <header className={styles.header_favorite}>
@@ -176,9 +177,9 @@ function FavoriteContent() {
           <Menu showLogout items={MENU_ITEMS} />
         </div>
         <div className={styles.desktop_nav}>
-          <Link href="/" className={styles.back_link} aria-label="На главную">
-            <IconButton src={ArrowLeftIcon} alt="Назад на главную" />
-          </Link>
+          <button className={styles.home_button} onClick={handleHome}>
+            <Image src={HomeIcon} alt="Вернуться на главную" />
+          </button>
         </div>
         <h1 className={styles.title}>Избранное</h1>
       </header>
@@ -210,9 +211,9 @@ function FavoriteContent() {
         )}
       </main>
 
-      <Modal isOpen={!!selectedProduct} onClose={handleCloseModal}>
-        {selectedProduct && (
-          <CardInfo product={selectedProduct} onClose={handleCloseModal} />
+      <Modal isOpen={!!activeProduct} onClose={handleCloseModal}>
+        {activeProduct && (
+          <CardInfo product={activeProduct} onClose={handleCloseModal} />
         )}
       </Modal>
     </div>
