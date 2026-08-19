@@ -1,8 +1,9 @@
 "use client";
 
 import styles from "./favorite.module.scss";
-import HomeIcon from "@/assets/images/icons/home.svg";
+import ArrowLeftIcon from "@/assets/images/icons/arrow-left.svg";
 import Image from "next/image";
+import Link from "next/link";
 import { Menu } from "@/components/Menu/Menu";
 import { Card, CardProps } from "@/components/Card/Card";
 import { CardInfo } from "@/components/CardInfo/CardInfo";
@@ -12,6 +13,7 @@ import { createClient } from "@/utils/supabase/client";
 import { useEffect, useState, useCallback, Suspense } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { Modal } from "@/components/Modal/Modal";
+import { IconButton } from "@/components/ui/IconButton/IconButton";
 
 interface ProductRow {
   id: string;
@@ -167,10 +169,6 @@ function FavoriteContent() {
     window.history.pushState(null, "", pathname);
   }, [pathname]);
 
-  const handleHome = () => {
-    router.push("/");
-  };
-
   return (
     <div className={styles.container}>
       <header className={styles.header_favorite}>
@@ -178,9 +176,9 @@ function FavoriteContent() {
           <Menu showLogout items={MENU_ITEMS} />
         </div>
         <div className={styles.desktop_nav}>
-          <button className={styles.home_button} onClick={handleHome}>
-            <Image src={HomeIcon} alt="Вернуться на главную" />
-          </button>
+          <Link href="/" className={styles.back_link} aria-label="На главную">
+            <IconButton src={ArrowLeftIcon} alt="Назад на главную" />
+          </Link>
         </div>
         <h1 className={styles.title}>Избранное</h1>
       </header>
