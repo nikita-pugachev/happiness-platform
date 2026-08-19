@@ -122,3 +122,9 @@
   width: 100%;
   text-align: center;
 }
+
+@media(width >= 768px) {
+  .container {
+    max-width: 375px;
+  }
+}

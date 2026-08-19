@@ -1,7 +1,7 @@
 .filter_container {
   width: 100%;
-  margin: 0 auto;
-  padding: 16px;
+  padding-inline: 16px;
+  margin-block: 16px;
 }
 
 .scroll_wrapper {
@@ -10,7 +10,6 @@
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-  scroll-snap-type: x mandatory;
 
   &::-webkit-scrollbar {
     display: none;
@@ -20,18 +19,16 @@
 .category_list {
   display: flex;
   flex-wrap: nowrap;
-  gap: var(--category-gap);
-  margin: 0;
-  padding: 0;
+  gap: 8px;
   list-style: none;
-  width: max-content;
+  width: 100%;
 }
 
 .category_item {
-  flex: 0 0 calc((100vw - 32px - (3 * var(--category-gap))) / 4);
-  width: calc((100vw - 32px - (3 * var(--category-gap))) / 4);
-  max-width: calc((100vw - 32px - (3 * var(--category-gap))) / 4);
-  scroll-snap-align: start;
+  flex: 0 0 calc((100% - 24px) / 4);
+  width: calc((100% - 24px) / 4);
+  min-width: calc((100% - 24px) / 4);
+  max-width: calc((100% - 24px) / 4);
 
   > button {
     width: 100%;

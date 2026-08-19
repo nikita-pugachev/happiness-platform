@@ -1,12 +1,17 @@
 "use client";
 
 import styles from "./favorite.module.scss";
+import HomeIcon from "@/assets/images/icons/home.svg";
+import Image from "next/image";
 import { Menu } from "@/components/Menu/Menu";
 import { Card, CardProps } from "@/components/Card/Card";
+import { CardInfo } from "@/components/CardInfo/CardInfo";
 import { Spinner } from "@/components/ui/Spinner/Spinner";
 import { useAuth } from "@/hooks/useAuth";
 import { createClient } from "@/utils/supabase/client";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, Suspense } from "react";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { Modal } from "@/components/Modal/Modal";
 
 interface ProductRow {
   id: string;
@@ -18,10 +23,17 @@ interface ProductRow {
 
 const MENU_ITEMS = ["Главная страница", "Личный кабинет"];
 
-export default function Page() {
+function FavoriteContent() {
   const { user, loading: authLoading } = useAuth();
   const [favoriteProducts, setFavoriteProducts] = useState<CardProps[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<CardProps | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+
+  const cardIdFromUrl = searchParams.get("cardId") || searchParams.get("id");
 
   useEffect(() => {
     let isMounted = true;
@@ -91,6 +103,41 @@ export default function Page() {
     };
   }, [user, authLoading]);
 
+  useEffect(() => {
+    if (!cardIdFromUrl) return;
+
+    let isMounted = true;
+    const fetchProductById = async () => {
+      try {
+        const supabase = createClient();
+        const { data } = await supabase
+          .from("products")
+          .select("*")
+          .eq("id", cardIdFromUrl)
+          .maybeSingle();
+
+        if (isMounted && data) {
+          const row = data as unknown as ProductRow;
+          setSelectedProduct({
+            id: row.id,
+            title: row.name,
+            price: row.price,
+            imageSrc: row.image_url,
+            description: row.description,
+          });
+        }
+      } catch (err) {
+        console.error("Ошибка загрузки товара по ID:", err);
+      }
+    };
+
+    fetchProductById();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [cardIdFromUrl]);
+
   const handleFavoriteToggle = useCallback(
     (isLiked: boolean, productId: string) => {
       if (!isLiked) {
@@ -102,10 +149,38 @@ export default function Page() {
     [],
   );
 
+  const handleCardClick = useCallback(
+    (product: CardProps) => {
+      setSelectedProduct(product);
+      const targetId = product.id || product.title;
+      const newUrl = `${pathname}?cardId=${targetId}`;
+      window.history.pushState(null, "", newUrl);
+    },
+    [pathname],
+  );
+
+  const handleCloseModal = useCallback(() => {
+    setSelectedProduct(null);
+    window.history.pushState(null, "", pathname);
+  }, [pathname]);
+
+  const handleHome = () => {
+    router.push("/");
+  };
+
+  const activeProduct = cardIdFromUrl ? selectedProduct : null;
+
   return (
     <div className={styles.container}>
       <header className={styles.header_favorite}>
-        <Menu showLogout items={MENU_ITEMS} />
+        <div className={styles.mobile_nav}>
+          <Menu showLogout items={MENU_ITEMS} />
+        </div>
+        <div className={styles.desktop_nav}>
+          <button className={styles.home_button} onClick={handleHome}>
+            <Image src={HomeIcon} alt="Вернуться на главную" />
+          </button>
+        </div>
         <h1 className={styles.title}>Избранное</h1>
       </header>
 
@@ -129,11 +204,26 @@ export default function Page() {
                 imageSrc={product.imageSrc}
                 description={product.description}
                 onFavoriteToggle={handleFavoriteToggle}
+                onCardClick={() => handleCardClick(product)}
               />
             ))}
           </div>
         )}
       </main>
+
+      <Modal isOpen={!!activeProduct} onClose={handleCloseModal}>
+        {activeProduct && (
+          <CardInfo product={activeProduct} onClose={handleCloseModal} />
+        )}
+      </Modal>
     </div>
+  );
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={null}>
+      <FavoriteContent />
+    </Suspense>
   );
 }

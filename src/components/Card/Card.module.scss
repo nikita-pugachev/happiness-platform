@@ -8,6 +8,8 @@
   padding: 12px;
   cursor: pointer;
   width: 100%;
+  max-width: 250px;
+  max-height: 350px;
   gap: 8px;
 }
 
@@ -19,6 +21,7 @@
   border: none;
   width: 20px;
   height: 20px;
+  cursor: pointer;
 }
 
 .favorite_image {

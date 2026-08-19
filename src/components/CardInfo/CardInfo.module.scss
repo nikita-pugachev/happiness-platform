@@ -131,3 +131,9 @@
   font-size: var(--font-size-main);
   color: var(--font-color);
 }
+
+@media(width >= 768px) {
+  .description_text {
+    text-align: center;
+  }
+}

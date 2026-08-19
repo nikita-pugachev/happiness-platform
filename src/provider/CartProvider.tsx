@@ -34,29 +34,27 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 const LOCAL_STORAGE_KEY = "happiness_cart_items";
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-    try {
-      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
-      if (saved) {
-        setCartItems(JSON.parse(saved));
+  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+        if (saved) {
+          return JSON.parse(saved);
+        }
+      } catch (e) {
+        console.error("Ошибка при чтении корзины из localStorage", e);
       }
-    } catch (e) {
-      console.error("Произошла ошибка, попробуйте снова", e);
     }
-  }, []);
+    return [];
+  });
 
   useEffect(() => {
-    if (!isMounted) return;
     try {
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(cartItems));
     } catch (e) {
-      console.error("Произошла ошибка, попробуйте снова", e);
+      console.error("Ошибка при сохранении корзины в localStorage", e);
     }
-  }, [cartItems, isMounted]);
+  }, [cartItems]);
 
   const updateQuantity = useCallback(
     (product: Omit<CartItem, "quantity">, newQuantity: number) => {
@@ -106,12 +104,10 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const totalCount = useMemo(() => {
-    if (!isMounted) return 0;
     return cartItems.reduce((sum, item) => sum + item.quantity, 0);
-  }, [cartItems, isMounted]);
+  }, [cartItems]);
 
   const totalPrice = useMemo(() => {
-    if (!isMounted) return 0;
     return cartItems.reduce((sum, item) => {
       const numPrice =
         typeof item.price === "number"
@@ -119,7 +115,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
           : parseFloat(item.price) || 0;
       return sum + numPrice * item.quantity;
     }, 0);
-  }, [cartItems, isMounted]);
+  }, [cartItems]);
 
   const contextValue = useMemo(
     () => ({
