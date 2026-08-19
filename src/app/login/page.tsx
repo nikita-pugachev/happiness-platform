@@ -26,10 +26,11 @@ export default function Page() {
 
   const { user } = useAuth();
 
-  if (user) {
-    router.push("/");
-    return;
-  }
+  useEffect(() => {
+    if (user) {
+      router.push("/");
+    }
+  }, [user, router]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

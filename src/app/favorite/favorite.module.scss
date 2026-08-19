@@ -89,4 +89,10 @@
     border: none;
     cursor: pointer;
   }
+
+  .grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 }

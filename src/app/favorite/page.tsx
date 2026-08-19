@@ -104,10 +104,7 @@ function FavoriteContent() {
   }, [user, authLoading]);
 
   useEffect(() => {
-    if (!cardIdFromUrl) {
-      setSelectedProduct(null);
-      return;
-    }
+    if (!cardIdFromUrl) return;
 
     let isMounted = true;
     const fetchProductById = async () => {
@@ -171,6 +168,8 @@ function FavoriteContent() {
     router.push("/");
   };
 
+  const activeProduct = cardIdFromUrl ? selectedProduct : null;
+
   return (
     <div className={styles.container}>
       <header className={styles.header_favorite}>
@@ -212,9 +211,9 @@ function FavoriteContent() {
         )}
       </main>
 
-      <Modal isOpen={!!selectedProduct} onClose={handleCloseModal}>
-        {selectedProduct && (
-          <CardInfo product={selectedProduct} onClose={handleCloseModal} />
+      <Modal isOpen={!!activeProduct} onClose={handleCloseModal}>
+        {activeProduct && (
+          <CardInfo product={activeProduct} onClose={handleCloseModal} />
         )}
       </Modal>
     </div>

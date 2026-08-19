@@ -31,10 +31,7 @@ function CatalogContent() {
   const cardIdFromUrl = searchParams.get("cardId") || searchParams.get("id");
 
   useEffect(() => {
-    if (!cardIdFromUrl) {
-      setSelectedProduct(null);
-      return;
-    }
+    if (!cardIdFromUrl) return;
 
     let isMounted = true;
     const fetchProductById = async () => {
@@ -97,21 +94,28 @@ function CatalogContent() {
     }
   };
 
+  const activeProduct = cardIdFromUrl ? selectedProduct : null;
+
   return (
     <>
       <Header searchQuery={searchQuery} onSearchChange={setSearchQuery} />
       <main className={styles.main_content}>
+        {/* Мобильная плашка фильтров (< 768px) */}
         <div className={styles.mobile_filter_section}>
           <FilterCategory
             selectedCategory={selectedMobileCategory}
             onSelectCategory={handleMobileCategorySelect}
           />
         </div>
+
+        {/* Десктопный левый сайдбар с чекбоксами (>= 768px) */}
         <Filter
           selectedCategories={selectedCategories}
           onSelectCategories={handleDesktopCategoriesSelect}
           className={styles.desktop_sidebar}
         />
+
+        {/* Сетка товаров (справа на ПК, на всю ширину на мобильном) */}
         <div className={styles.catalog_section}>
           <CardList
             selectedCategory={selectedCategories}
@@ -121,9 +125,9 @@ function CatalogContent() {
         </div>
       </main>
 
-      <Modal isOpen={!!selectedProduct} onClose={handleCloseModal}>
-        {selectedProduct && (
-          <CardInfo product={selectedProduct} onClose={handleCloseModal} />
+      <Modal isOpen={!!activeProduct} onClose={handleCloseModal}>
+        {activeProduct && (
+          <CardInfo product={activeProduct} onClose={handleCloseModal} />
         )}
       </Modal>
     </>

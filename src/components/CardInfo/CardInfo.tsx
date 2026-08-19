@@ -28,10 +28,7 @@ export const CardInfo: FC<CardInfoProps> = ({ product, onClose }) => {
   const [isLike, setLike] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!user || !productId) {
-      setLike(false);
-      return;
-    }
+    if (!user || !productId) return;
 
     let isMounted = true;
     const supabase = createClient();

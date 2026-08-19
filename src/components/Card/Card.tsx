@@ -44,7 +44,6 @@ export const Card: FC<CardProps> = memo(({
     const targetId = id || productId;
 
     if (!user || !targetId) {
-      setLike(false);
       return;
     }
 
